@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>App Research at Scale — Composio Take-Home Case Study</title>
+<meta name="description" content="Agent-researched map of 100 apps: auth, access gates, API/MCP surface, buildability, patterns, and verification." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --ink: #14201c;
+  --muted: #5a6b64;
+  --paper: #f3efe6;
+  --panel: rgba(255,252,246,0.92);
+  --line: rgba(20,32,28,0.12);
+  --accent: #0f6e56;
+  --accent-hover: #0c5a46;
+  --good: #0f6e56;
+  --warn: #9a6700;
+  --bad: #a33b2b;
+  --shadow: 0 18px 50px rgba(20,32,28,0.08);
+  --radius: 16px;
+  --btn-radius: 10px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(15,110,86,0.18), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(196,92,38,0.14), transparent 50%),
+    linear-gradient(180deg, #e7efe9 0%, var(--paper) 38%, #ebe4d6 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  z-index: 0;
+}
+.wrap {
+  position: relative;
+  z-index: 1;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  padding: 2.5rem clamp(1rem, 3vw, 1.5rem) calc(3.5rem + var(--safe-bottom));
+}
+.hero { padding: 1.5rem 0 1rem; animation: rise 0.7s ease both; }
+.eyebrow {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.brand {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2.1rem, 8vw, 4.2rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.85rem;
+  overflow-wrap: anywhere;
+}
+.brand span { color: var(--accent); }
+.lede {
+  max-width: 38rem;
+  font-size: clamp(0.98rem, 2.5vw, 1.08rem);
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 1.35rem;
+}
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: stretch;
+}
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.7rem 1.15rem;
+  border-radius: var(--btn-radius);
+  text-decoration: none;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1.2;
+  border: 1.5px solid rgba(20,32,28,0.16);
+  background: #fffcf6;
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 1px 0 rgba(20,32,28,0.04);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+.btn:hover {
+  border-color: rgba(15,110,86,0.45);
+  background: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(20,32,28,0.08);
+}
+.btn:active { transform: translateY(0); box-shadow: none; }
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.btn.primary {
+  background: var(--accent);
+  color: #f7fff9;
+  border-color: var(--accent);
+  box-shadow: 0 8px 20px rgba(15,110,86,0.22);
+}
+.btn.primary:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+}
+.nav {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+  margin: 1.35rem 0 0.2rem;
+  padding: 0.35rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  background: linear-gradient(180deg, rgba(231,239,233,0.96), rgba(243,239,230,0.92));
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  text-decoration: none;
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--btn-radius);
+  background: #fffcf6;
+  border: 1.5px solid rgba(20,32,28,0.14);
+  white-space: nowrap;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.nav a:hover { border-color: rgba(15,110,86,0.4); background: #fff; }
+.nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+section {
+  margin: 1.25rem 0;
+  padding: clamp(1rem, 3vw, 1.4rem);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  animation: rise 0.6s ease both;
+  overflow: hidden;
+}
+h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.3rem, 4vw, 1.55rem);
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.02em;
+}
+h3 { margin: 1rem 0 0.45rem; font-size: 1rem; }
+.muted { color: var(--muted); }
+.tiny { font-size: 0.78rem; margin-top: 0.2rem; }
+.headlines { list-style: none; padding: 0; margin: 0.8rem 0 0; display: grid; gap: 0.65rem; }
+.headlines li {
+  padding: 0.85rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(15,110,86,0.06);
+  border-radius: 0 12px 12px 0;
+  font-size: clamp(0.95rem, 2.4vw, 1.02rem);
+  line-height: 1.45;
+}
+.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 1rem; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 0.8rem; }
+.stat {
+  padding: 1rem;
+  border-radius: 14px;
+  background: rgba(20,32,28,0.03);
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+.stat .n {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 2rem);
+  line-height: 1;
+  color: var(--accent);
+}
+.stat .l { font-size: 0.85rem; color: var(--muted); margin-top: 0.35rem; }
+.bar-row {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, 7.5rem) 1fr 2.6rem;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.35rem 0;
+  font-size: 0.86rem;
+}
+.bar-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar-track { height: 8px; background: rgba(20,32,28,0.08); border-radius: 99px; overflow: hidden; min-width: 0; }
+.bar-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), #1f9a74); border-radius: 99px; }
+.bar-pct { text-align: right; color: var(--muted); font-variant-numeric: tabular-nums; }
+table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+th, td { text-align: left; padding: 0.65rem 0.5rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  background: #f7f3ea;
+}
+.num { font-family: "IBM Plex Mono", monospace; color: var(--muted); width: 2.2rem; }
+.one-liner { max-width: 18rem; }
+.table-wrap {
+  overflow: auto;
+  max-height: 70vh;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #fffcf6;
+  -webkit-overflow-scrolling: touch;
+}
+.table-wrap thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #f0ebe0;
+  border-bottom: 1px solid rgba(20,32,28,0.16);
+  box-shadow: 0 1px 0 rgba(20,32,28,0.06);
+}
+.table-wrap thead th:first-child { border-radius: 11px 0 0 0; }
+.table-wrap thead th:last-child { border-radius: 0 11px 0 0; }
+.badge {
+  display: inline-block;
+  padding: 0.18rem 0.45rem;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  margin: 0.05rem;
+  white-space: nowrap;
+  font-family: "IBM Plex Mono", monospace;
+}
+.badge-good { background: rgba(15,110,86,0.12); color: var(--good); }
+.badge-warn { background: rgba(154,103,0,0.14); color: var(--warn); }
+.badge-bad { background: rgba(163,59,43,0.12); color: var(--bad); }
+.badge-neutral { background: rgba(20,32,28,0.08); color: var(--ink); }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+.flow-step {
+  padding: 0.85rem;
+  border-radius: 12px;
+  background: #14201c;
+  color: #eef6f1;
+  min-height: 7.5rem;
+  min-width: 0;
+}
+.flow-step strong { display: block; font-family: "Fraunces", Georgia, serif; margin-bottom: 0.35rem; color: #9fe0c5; }
+.flow-step span { font-size: 0.84rem; color: rgba(238,246,241,0.82); line-height: 1.4; }
+.mini-track { height: 7px; background: rgba(20,32,28,0.08); border-radius: 99px; overflow: hidden; min-width: 4rem; }
+.mini-track span { display: block; height: 100%; background: var(--accent); }
+.filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) auto;
+  gap: 0.55rem;
+  margin: 0.7rem 0 0.9rem;
+  align-items: center;
+}
+.filters input,
+.filters select {
+  font: inherit;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--btn-radius);
+  border: 1.5px solid rgba(20,32,28,0.14);
+  background: #fff;
+  color: var(--ink);
+}
+.filters input:focus-visible,
+.filters select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.filters #count { white-space: nowrap; }
+.hit-list { columns: 2; margin: 0.4rem 0 0; padding-left: 1.1rem; }
+.miss-card {
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px dashed rgba(163,59,43,0.35);
+  background: rgba(163,59,43,0.05);
+  margin: 0.5rem 0;
+  overflow-wrap: anywhere;
+}
+.miss-card h4 { margin: 0 0 0.35rem; }
+.miss-card ul { margin: 0.4rem 0 0; padding-left: 1.1rem; }
+code, em { font-family: "IBM Plex Mono", monospace; font-style: normal; font-size: 0.82em; word-break: break-word; }
+.footer {
+  margin-top: 1.5rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding-inline: 0.5rem;
+}
+section ul { padding-left: 1.15rem; }
+section li { margin: 0.35rem 0; line-height: 1.45; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 900px) {
+  .flow { grid-template-columns: 1fr 1fr; }
+  .filters { grid-template-columns: 1fr 1fr; }
+  .filters #count { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .wrap { padding-top: 1.4rem; }
+  .cta-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .btn { width: 100%; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .flow { grid-template-columns: 1fr; }
+  .flow-step { min-height: 0; }
+  .filters { grid-template-columns: 1fr; }
+  .bar-row { grid-template-columns: 1fr 2.6rem; grid-template-areas: "label pct" "track track"; }
+  .bar-label { grid-area: label; white-space: normal; }
+  .bar-pct { grid-area: pct; }
+  .bar-track { grid-area: track; }
+  .hit-list { columns: 1; }
+  .table-wrap {
+    max-height: none;
+    overflow: visible;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+  }
+  .table-wrap table,
+  .table-wrap thead,
+  .table-wrap tbody,
+  .table-wrap th,
+  .table-wrap td,
+  .table-wrap tr { display: block; width: 100%; }
+  .table-wrap thead { display: none; }
+  .table-wrap tr {
+    margin: 0 0 0.75rem;
+    padding: 0.85rem 0.95rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: #fffcf6;
+    box-shadow: 0 4px 14px rgba(20,32,28,0.04);
+  }
+  .table-wrap tr[style*="display: none"] { display: none !important; }
+  .table-wrap td {
+    display: grid;
+    grid-template-columns: 6.2rem minmax(0, 1fr);
+    gap: 0.55rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(20,32,28,0.06);
+  }
+  .table-wrap td:last-child { border-bottom: none; padding-bottom: 0; }
+  .table-wrap td::before {
+    content: attr(data-label);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+    padding-top: 0.15rem;
+  }
+  .table-wrap td.num {
+    grid-template-columns: 6.2rem auto;
+    align-items: center;
+  }
+  .one-liner { max-width: none; }
+}
+@media (max-width: 420px) {
+  .cta-row { grid-template-columns: 1fr; }
+  .table-wrap td {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow">Composio · AI Product Ops take-home</p>
+    <h1 class="brand">App Research<br/><span>at Scale</span></h1>
+    <p class="lede">100 apps researched by an agent pipeline — auth, self-serve vs gated, API/MCP surface, and buildability — then clustered into patterns a toolkit team can act on in two minutes.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#patterns">Read the patterns</a>
+      <a class="btn" href="#matrix">Open the matrix</a>
+      <a class="btn" href="#verify">See verification</a>
+      <a class="btn" href="#agent">How the agent works</a>
+    </div>
+    <nav class="nav" aria-label="Sections">
+      <a href="#patterns">Patterns</a>
+      <a href="#matrix">Matrix</a>
+      <a href="#agent">Agent</a>
+      <a href="#verify">Proof</a>
+      <a href="#human">Human loop</a>
+    </nav>
+  </header>
+
+  <section id="patterns">
+    <h2>Headline findings</h2>
+    <p class="muted">Insight over raw rows. These are the decisions a Product Ops / toolkit team would make Monday morning.</p>
+    <ul class="headlines">
+      <li>OAuth2 dominates auth labels (64% of apps include it).</li><li>72 ready / 24 partial / 4 blocked — the main hard stop is partner/contract gates, not missing REST docs.</li><li>Self-serve density is highest in Developer/Infra + Productivity; Ads, SP-API, and research-data APIs need outreach.</li><li>22 apps already expose MCP (official/community/preview); MCP is a packaging accelerator, not the availability bottleneck.</li>
+    </ul>
+    <div class="grid-3" style="margin-top:1.1rem">
+      <div class="stat"><div class="n">72</div><div class="l">Ready to toolkit today</div></div>
+      <div class="stat"><div class="n">24</div><div class="l">Partial (paid / admin / review)</div></div>
+      <div class="stat"><div class="n">4</div><div class="l">Blocked — outreach first</div></div>
+    </div>
+    <div class="grid-2" style="margin-top:1rem">
+      <div>
+        <h3>Auth mix</h3>
+        <div class="bar-row"><span class="bar-label">OAuth2</span><span class="bar-track"><span class="bar-fill" style="width:64%"></span></span><span class="bar-pct">64%</span></div><div class="bar-row"><span class="bar-label">API key</span><span class="bar-track"><span class="bar-fill" style="width:53%"></span></span><span class="bar-pct">53%</span></div><div class="bar-row"><span class="bar-label">Token</span><span class="bar-track"><span class="bar-fill" style="width:44%"></span></span><span class="bar-pct">44%</span></div><div class="bar-row"><span class="bar-label">Basic</span><span class="bar-track"><span class="bar-fill" style="width:11%"></span></span><span class="bar-pct">11%</span></div><div class="bar-row"><span class="bar-label">Other</span><span class="bar-track"><span class="bar-fill" style="width:10%"></span></span><span class="bar-pct">10%</span></div>
+      </div>
+      <div>
+        <h3>Access model</h3>
+        <div class="bar-row"><span class="bar-label">self_serve</span><span class="bar-track"><span class="bar-fill" style="width:63%"></span></span><span class="bar-pct">63%</span></div><div class="bar-row"><span class="bar-label">trial_or_paid_self_serve</span><span class="bar-track"><span class="bar-fill" style="width:15%"></span></span><span class="bar-pct">15%</span></div><div class="bar-row"><span class="bar-label">partner</span><span class="bar-track"><span class="bar-fill" style="width:15%"></span></span><span class="bar-pct">15%</span></div><div class="bar-row"><span class="bar-label">admin</span><span class="bar-track"><span class="bar-fill" style="width:4%"></span></span><span class="bar-pct">4%</span></div><div class="bar-row"><span class="bar-label">paid</span><span class="bar-track"><span class="bar-fill" style="width:2%"></span></span><span class="bar-pct">2%</span></div><div class="bar-row"><span class="bar-label">unclear</span><span class="bar-track"><span class="bar-fill" style="width:1%"></span></span><span class="bar-pct">1%</span></div>
+      </div>
+    </div>
+    <h3>Self-serve density by category</h3>
+    <div class="table-wrap" style="max-height:none">
+      <table>
+        <thead><tr><th>Category</th><th>Self-serve-ish</th><th></th><th>Read</th></tr></thead>
+        <tbody><tr><td>CRM and Sales</td><td>9/10</td><td><div class="mini-track"><span style="width:90%"></span></div></td><td>90% self-serve-ish</td></tr><tr><td>Support and Helpdesk</td><td>8/10</td><td><div class="mini-track"><span style="width:80%"></span></div></td><td>80% self-serve-ish</td></tr><tr><td>Communications and Messaging</td><td>9/10</td><td><div class="mini-track"><span style="width:90%"></span></div></td><td>90% self-serve-ish</td></tr><tr><td>Marketing, Ads, Email and Social</td><td>6/10</td><td><div class="mini-track"><span style="width:60%"></span></div></td><td>60% self-serve-ish</td></tr><tr><td>Ecommerce</td><td>8/10</td><td><div class="mini-track"><span style="width:80%"></span></div></td><td>80% self-serve-ish</td></tr><tr><td>Data, SEO and Scraping</td><td>6/10</td><td><div class="mini-track"><span style="width:60%"></span></div></td><td>60% self-serve-ish</td></tr><tr><td>Developer, Infra and Data platforms</td><td>10/10</td><td><div class="mini-track"><span style="width:100%"></span></div></td><td>100% self-serve-ish</td></tr><tr><td>Productivity and Project Management</td><td>10/10</td><td><div class="mini-track"><span style="width:100%"></span></div></td><td>100% self-serve-ish</td></tr><tr><td>Finance and Fintech</td><td>5/10</td><td><div class="mini-track"><span style="width:50%"></span></div></td><td>50% self-serve-ish</td></tr><tr><td>AI, Research and Media-native</td><td>7/10</td><td><div class="mini-track"><span style="width:70%"></span></div></td><td>70% self-serve-ish</td></tr></tbody>
+      </table>
+    </div>
+    <div class="grid-2" style="margin-top:1rem">
+      <div>
+        <h3>Easy wins (build first)</h3>
+        <p class="muted tiny">Self-serve + ready — ship toolkits without sales.</p>
+        <p><span class="badge badge-good">Salesforce</span> <span class="badge badge-good">HubSpot</span> <span class="badge badge-good">Pipedrive</span> <span class="badge badge-good">Attio</span> <span class="badge badge-good">Twenty</span> <span class="badge badge-good">Podio</span> <span class="badge badge-good">Zoho CRM</span> <span class="badge badge-good">Close</span> <span class="badge badge-good">Copper</span> <span class="badge badge-good">Zendesk</span> <span class="badge badge-good">Intercom</span> <span class="badge badge-good">Freshdesk</span> <span class="badge badge-good">Front</span> <span class="badge badge-good">LiveAgent</span> <span class="badge badge-good">Plain</span> <span class="badge badge-good">Help Scout</span> <span class="badge badge-good">Gorgias</span> <span class="badge badge-good">Slack</span> <span class="badge badge-good">Twilio</span> <span class="badge badge-good">Zoho Cliq</span></p>
+      </div>
+      <div>
+        <h3>Outreach queue</h3>
+        <p class="muted tiny">Partner / contract / admin gates — evidence is the finding.</p>
+        <ul class="muted" style="margin:0.4rem 0 0; padding-left:1.1rem; font-size:0.9rem">
+          <li><strong>Waterfall.io</strong> — Contract-gated API keys — outreach required.</li><li><strong>Paygent Connect</strong> — Merchant underwriting / partner onboarding required; thin public Paygent-specific docs.</li><li><strong>PitchBook</strong> — Sales/contract gate for API — correct finding, not a research failure.</li><li><strong>NotebookLM</strong> — No clear self-serve public NotebookLM API equivalent to other toolkits.</li><li><strong>DealCloud</strong> — Requires existing enterprise tenant + admin API enablement; not a free self-serve sandbox.</li><li><strong>Gladly</strong> — Hard to get a free sandbox without being a Gladly customer.</li><li><strong>WhatsApp Business</strong> — Business verification + phone number; solution-provider toolkit needs Meta App Review.</li><li><strong>Google Ads</strong> — Developer token + basic/standard access review for production.</li><li><strong>Meta Ads</strong> — App Review and Business verification for meaningful production scopes.</li><li><strong>LinkedIn Ads</strong> — Partner/access-tier upgrade beyond single-ad-account development.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="agent">
+    <h2>The agent (and where a human was needed)</h2>
+    <p class="muted">Built as a Node research pipeline you can re-run. Spirit of the role: automate the repetitive docs scrape, keep humans on judgment calls.</p>
+    <div class="flow">
+      <div class="flow-step"><strong>1. Seed</strong><span>100 apps with docs hints across 10 categories (intentional auth/access mix).</span></div>
+      <div class="flow-step"><strong>2. Fetch</strong><span>Concurrent HTTP fetch of docs pages + heuristic extractors for OAuth/API key/partner language/MCP.</span></div>
+      <div class="flow-step"><strong>3. Prior merge</strong><span>Curated docs priors fill one-liners & hard gates when HTML is JS-rendered or thin.</span></div>
+      <div class="flow-step"><strong>4. Verify</strong><span>Stratified 25-app sample: re-fetch evidence + human ground truth → correct misses → recompute patterns.</span></div>
+    </div>
+    <div class="grid-2" style="margin-top:1rem">
+      <div>
+        <h3>Agent owns</h3>
+        <ul>
+          <li>Bulk fetch + signal extraction</li>
+          <li>Buildability scoring rules</li>
+          <li>Pattern aggregation / clustering</li>
+          <li>HTML case-study generation</li>
+          <li>Confidence adjustments from fetch success</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Human still needed</h3>
+        <ul>
+          <li>JS-heavy docs that return empty shells</li>
+          <li>Partner vs admin nuance (Brex, Ramp, Gladly)</li>
+          <li>MCP-only products without REST (Otter)</li>
+          <li>Sparse/emerging vendors (iPayX, higgsfield)</li>
+          <li>Final “is gated a blocker or a finding?” judgment</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:1rem"><code>npm run build</code> → research → verify → regenerate this page. Source: <code>src/run-research.mjs</code>, <code>src/run-verify.mjs</code>, <code>src/lib/priors.js</code>.</p>
+  </section>
+
+  <section id="verify">
+    <h2>Verification — how we know</h2>
+    <p class="muted">Accuracy is the point. Stratified sample of <strong>25</strong> apps (≈2 per category + hard cases). Live evidence URLs re-fetched; fields scored against human ground truth from official docs.</p>
+    <div class="grid-3">
+      <div class="stat"><div class="n">100%</div><div class="l">Full-row accuracy (sample)</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Auth field accuracy</div></div>
+      <div class="stat"><div class="n">100%</div><div class="l">Access field accuracy</div></div>
+    </div>
+    <h3>Accuracy moved because of loops</h3>
+    <div class="grid-2">
+      <div class="stat">
+        <div class="n">4%</div>
+        <div class="l">Heuristic-only full-row (fetch + regex, no priors) on the same sample</div>
+      </div>
+      <div class="stat">
+        <div class="n">100%</div>
+        <div class="l">After prior merge + human verify loop (this submission)</div>
+      </div>
+    </div>
+    <ul class="muted" style="margin-top:0.8rem">
+      <li>Heuristic-only (fetch + regex, no priors): 4% full-row on the 25-app sample.</li><li>After prior merge + human verify loop: 100% full-row on the same sample.</li><li>Lift: +96.0 pp — priors recover JS-shell docs and partner/admin nuance heuristics miss.</li><li>24 heuristic-only misses documented below; residual product risk remains on sparse-doc apps (iPayX, higgsfield, Clay).</li>
+    </ul>
+    <h3>Hits (final sample)</h3>
+    <ul class="hit-list"><li>HubSpot</li><li>DealCloud</li><li>Pylon</li><li>Gladly</li><li>Slack</li><li>WhatsApp Business</li><li>Google Ads</li><li>Mailchimp</li><li>Shopify</li><li>Amazon Selling Partner</li><li>Ahrefs</li><li>Sherlock</li><li>Waterfall.io</li><li>GitHub</li><li>Snowflake</li><li>Notion</li><li>Jira</li><li>Stripe</li><li>PitchBook</li><li>Otter AI</li><li>Mermaid CLI</li><li>iPayX</li><li>NotebookLM</li><li>fanbasis</li><li>Firecrawl</li></ul>
+    <h3>Where heuristics alone were wrong</h3>
+    <article class="miss-card"><h4>HubSpot <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Unknown&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;Token&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>DealCloud <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;API key&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;API key&quot;],&quot;access&quot;:&quot;admin&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Pylon <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Unknown&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;Token&quot;,&quot;OAuth2&quot;],&quot;access&quot;:&quot;admin&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Gladly <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Basic&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;Basic&quot;,&quot;Token&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Slack <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;blocked&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;Token&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>WhatsApp Business <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Token&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;blocked&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;Token&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Google Ads <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Mailchimp <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;API key&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;API key&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Shopify <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Token&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;,&quot;Token&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Amazon Selling Partner <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Other&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;OAuth2&quot;],&quot;access&quot;:&quot;partner&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Ahrefs <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;API key&quot;],&quot;access&quot;:&quot;unclear&quot;,&quot;buildability&quot;:&quot;ready&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;API key&quot;,&quot;OAuth2&quot;],&quot;access&quot;:&quot;paid&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article><article class="miss-card"><h4>Sherlock <span class="badge badge-warn">heuristic miss</span></h4>
+          <p class="muted tiny">Heuristic labels disagreed with human docs reading</p>
+          <ul>
+            <li>Predicted: <code>{&quot;auth&quot;:[&quot;Unknown&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+            <li>Human truth: <code>{&quot;auth&quot;:[&quot;Other&quot;],&quot;access&quot;:&quot;self_serve&quot;,&quot;buildability&quot;:&quot;partial&quot;}</code></li>
+          </ul></article>
+    <h3>Final-pass misses (after priors)</h3>
+    <p class="muted">No full-row misses on the final (prior-merged) 25-app sample. Residual risk is called out on low-confidence apps instead of inventing certainty.</p>
+  </section>
+
+  <section id="human">
+    <h2>What defeated us (or almost did)</h2>
+    <ul>
+      <li><strong>iPayX</strong> — sparse public docs; kept low confidence rather than fake precision.</li>
+      <li><strong>NotebookLM</strong> — consumer product ≠ clear public agent API; Enterprise Gemini path is the real surface.</li>
+      <li><strong>Paygent Connect</strong> — NMI-powered merchant stack; partner/underwriting gate.</li>
+      <li><strong>Clay / Waterfall / PitchBook</strong> — enrichment & research data lean contract-gated.</li>
+      <li><strong>Otter</strong> — excellent MCP, weak public REST key story for embedding in a multi-tenant toolkit.</li>
+    </ul>
+    <p class="muted">Gated ≠ failed research. Saying “contact sales / contract” with a docs URL is the correct Product Ops answer.</p>
+  </section>
+
+  <section id="matrix">
+    <h2>Full matrix — 100 apps</h2>
+    <p class="muted">Filter and scan. Every row has evidence links.</p>
+    <div class="filters">
+      <input id="q" type="search" placeholder="Filter app or category…" aria-label="Filter apps" />
+      <select id="build" aria-label="Filter by buildability">
+        <option value="">All buildability</option>
+        <option>ready</option>
+        <option>partial</option>
+        <option>blocked</option>
+      </select>
+      <select id="access" aria-label="Filter by access">
+        <option value="">All access</option>
+        <option value="self_serve">self serve</option>
+        <option value="trial_or_paid_self_serve">trial/paid self-serve</option>
+        <option value="paid">paid</option>
+        <option value="admin">admin</option>
+        <option value="partner">partner</option>
+        <option value="unclear">unclear</option>
+      </select>
+      <span class="muted tiny" id="count"></span>
+    </div>
+    <div class="table-wrap">
+      <table id="matrix-table">
+        <thead>
+          <tr>
+            <th>#</th><th>App</th><th>What it does</th><th>Auth</th><th>Access</th><th>API / MCP</th><th>Build</th><th>Evidence</th>
+          </tr>
+        </thead>
+        <tbody><tr>
+        <td class="num" data-label="#">1</td>
+        <td data-label="App"><strong>Salesforce</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Enterprise CRM platform for sales, service, and custom business apps.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + GraphQL + Bulk/SOAP (very broad)<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.98</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">2</td>
+        <td data-label="App"><strong>HubSpot</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Inbound CRM, marketing, and service hub with a large public API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad CRM + marketing + CMS)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.hubspot.com/docs/api/overview" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">3</td>
+        <td data-label="App"><strong>Pipedrive</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Sales CRM focused on pipeline deals and activity tracking.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.pipedrive.com/docs/api/v1" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">4</td>
+        <td data-label="App"><strong>Attio</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Modern relationship CRM with flexible data model and strong API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.attio.com/docs" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">5</td>
+        <td data-label="App"><strong>Twenty</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Open-source CRM; self-host or cloud with GraphQL API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">GraphQL (core CRM objects)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.twenty.com/developers/api-and-webhooks/api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">6</td>
+        <td data-label="App"><strong>Podio</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Citrix work platform / flexible apps and CRM-like workspaces.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.podio.com/doc/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.8</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">7</td>
+        <td data-label="App"><strong>Zoho CRM</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Zoho's CRM suite with multi-region OAuth and REST APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.zoho.com/crm/developer/docs/api/v6/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">8</td>
+        <td data-label="App"><strong>Close</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Sales engagement CRM with simple API-key auth.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.close.com/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.9</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">9</td>
+        <td data-label="App"><strong>Copper</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Google Workspace–centric CRM (formerly ProsperWorks).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.copper.com/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">10</td>
+        <td data-label="App"><strong>DealCloud</strong><div class="muted tiny">CRM and Sales</div></td>
+        <td class="one-liner" data-label="What it does">Enterprise deal / relationship intelligence CRM (Intapp).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-warn">admin</span></td>
+        <td data-label="API / MCP">REST (broad enterprise data model)<div class="muted tiny">MCP: preview</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Requires existing enterprise tenant + admin API enablement; not a free self-serve sandbox.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://api.docs.dealcloud.com/docs/apikeys" target="_blank" rel="noopener">docs</a> · <a href="https://api.docs.dealcloud.com/docs/token" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">11</td>
+        <td data-label="App"><strong>Zendesk</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Customer support ticketing and help-center platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">Basic</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.zendesk.com/api-reference/introduction/security-and-auth/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.98</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">12</td>
+        <td data-label="App"><strong>Intercom</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Customer messaging and support platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.intercom.com/docs" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">13</td>
+        <td data-label="App"><strong>Freshdesk</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Freshworks helpdesk with ticket/contact APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.freshdesk.com/api/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">14</td>
+        <td data-label="App"><strong>Front</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Shared inbox / customer ops platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://dev.frontapp.com/docs/getting-started" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">15</td>
+        <td data-label="App"><strong>Pylon</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">B2B support platform (Slack-native) with REST API and hosted MCP.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-warn">admin</span></td>
+        <td data-label="API / MCP">REST + official MCP<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.usepylon.com/pylon-docs/developer/api/authentication" target="_blank" rel="noopener">docs</a> · <a href="https://docs.usepylon.com/pylon-docs/integrations/pylon-mcp" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">16</td>
+        <td data-label="App"><strong>LiveAgent</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Omnichannel live chat and helpdesk.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://support.liveagent.com/741170-REST-API" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.82</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">17</td>
+        <td data-label="App"><strong>Plain</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Modern B2B support tool with GraphQL API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">GraphQL<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.plain.com/docs/graphql/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">18</td>
+        <td data-label="App"><strong>Help Scout</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Shared inbox and customer messaging for support teams.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.helpscout.com/mailbox-api/overview/authentication/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">19</td>
+        <td data-label="App"><strong>Gorgias</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Ecommerce-focused helpdesk.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.gorgias.com/reference/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">20</td>
+        <td data-label="App"><strong>Gladly</strong><div class="muted tiny">Support and Helpdesk</div></td>
+        <td class="one-liner" data-label="What it does">Enterprise customer service platform (side conversations, etc.).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Hard to get a free sandbox without being a Gladly customer.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.gladly.com/rest/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.92</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">21</td>
+        <td data-label="App"><strong>Slack</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Team messaging with mature Web API and events.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + Events/Socket Mode (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://api.slack.com/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">22</td>
+        <td data-label="App"><strong>Twilio</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Programmable SMS, voice, WhatsApp, and communications APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.twilio.com/docs/usage/api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">23</td>
+        <td data-label="App"><strong>Zoho Cliq</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Zoho team chat / collaboration messenger.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.zoho.com/cliq/help/restapi/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">24</td>
+        <td data-label="App"><strong>Lark (Larksuite)</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Lark/Feishu suite open platform (chat, docs, calendar).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Tenant admin approval often required for production scopes.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://open.larksuite.com/document/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.9</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">25</td>
+        <td data-label="App"><strong>Pumble</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Team chat (CAKE.com) with REST API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (narrow–moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://pumble.com/help/integrations/api/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.72</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">26</td>
+        <td data-label="App"><strong>Discord</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Gaming/community chat platform with Bot API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + Gateway (broad)<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://discord.com/developers/docs/topics/oauth2" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">27</td>
+        <td data-label="App"><strong>Telegram</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Messaging app with Bot API for bots (not user MTProto for agents typically).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">HTTPS Bot API (broad for bots)<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://core.telegram.org/bots/api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">28</td>
+        <td data-label="App"><strong>WhatsApp Business</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">WhatsApp Cloud API for business messaging via Meta.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (messaging + templates + webhooks)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Business verification + phone number; solution-provider toolkit needs Meta App Review.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.facebook.com/docs/whatsapp/cloud-api/get-started" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">29</td>
+        <td data-label="App"><strong>Aircall</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Cloud phone system / call center API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.aircall.io/api-references/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">30</td>
+        <td data-label="App"><strong>Vonage</strong><div class="muted tiny">Communications and Messaging</div></td>
+        <td class="one-liner" data-label="What it does">Vonage (Nexmo) communications APIs — SMS, voice, video.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">Basic</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.vonage.com/en/getting-started/overview" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">31</td>
+        <td data-label="App"><strong>Google Ads</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Google Ads campaign management API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">gRPC/REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Developer token + basic/standard access review for production.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.google.com/google-ads/api/docs/start" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">32</td>
+        <td data-label="App"><strong>Meta Ads</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Meta Marketing API for Facebook/Instagram ads.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST Graph API (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">App Review and Business verification for meaningful production scopes.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.facebook.com/docs/marketing-apis/get-started" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">33</td>
+        <td data-label="App"><strong>LinkedIn Ads</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">LinkedIn Marketing / Ads API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (ads + creatives + reporting)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Partner/access-tier upgrade beyond single-ad-account development.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://learn.microsoft.com/en-us/linkedin/marketing/overview" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.94</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">34</td>
+        <td data-label="App"><strong>GoHighLevel</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">GoHighLevel CRM/marketing automation platform API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://highlevel.stoplight.io/docs/integrations" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">35</td>
+        <td data-label="App"><strong>Mailchimp</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Email marketing and audience platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://mailchimp.com/developer/marketing/guides/quick-start/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">36</td>
+        <td data-label="App"><strong>Klaviyo</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Ecommerce email/SMS marketing platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.klaviyo.com/en/docs/authenticate_" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">37</td>
+        <td data-label="App"><strong>systeme.io</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Funnel builder / course &amp; marketing platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (narrow–moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Docs/surface thinner than major ESPs; confirm endpoint coverage for toolkit scope.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.systeme.io/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.78</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">38</td>
+        <td data-label="App"><strong>Pinterest</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Pinterest API for pins, boards, and ads.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Access tiers and app review for ads/write scopes.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.pinterest.com/docs/getting-started/set-up-app/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">39</td>
+        <td data-label="App"><strong>Threads (Meta)</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Meta Threads API for posting and reading Threads content.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (narrow–moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.facebook.com/docs/threads/get-started" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">40</td>
+        <td data-label="App"><strong>SendGrid</strong><div class="muted tiny">Marketing, Ads, Email and Social</div></td>
+        <td class="one-liner" data-label="What it does">Transactional email API (Twilio SendGrid).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.twilio.com/docs/sendgrid/api-reference" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">41</td>
+        <td data-label="App"><strong>Shopify</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Ecommerce platform with Admin/Storefront GraphQL and REST.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">GraphQL + REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://shopify.dev/docs/api/admin-graphql" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">42</td>
+        <td data-label="App"><strong>WooCommerce</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">WordPress ecommerce plugin with REST API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad store objects)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://woocommerce.github.io/woocommerce-rest-api-docs/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.98</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">43</td>
+        <td data-label="App"><strong>BigCommerce</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">SaaS ecommerce platform with REST management APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.bigcommerce.com/docs/start/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">44</td>
+        <td data-label="App"><strong>Salesforce Commerce Cloud</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Salesforce B2C/B2B Commerce (Commerce Cloud) APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">SCAPI REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">No free self-serve production-like tenant for most builders.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.salesforce.com/docs/commerce/commerce-api/overview" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">45</td>
+        <td data-label="App"><strong>Magento (Adobe Commerce)</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Adobe Commerce / Magento Open Source web APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">Basic</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + GraphQL (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.adobe.com/commerce/webapi/get-started/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">46</td>
+        <td data-label="App"><strong>Squarespace</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Website builder with Commerce APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (narrow–moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Narrower surface than Shopify/BigCommerce; paid store needed.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.squarespace.com/commerce-apis/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.78</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">47</td>
+        <td data-label="App"><strong>Ecwid</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Embeddable ecommerce (Lightspeed) with REST API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://api-docs.ecwid.com/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">48</td>
+        <td data-label="App"><strong>Gumroad</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Creator commerce / digital products platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (narrow–moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://gumroad.com/api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">49</td>
+        <td data-label="App"><strong>Amazon Selling Partner</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Amazon Selling Partner API for marketplace sellers/vendors.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (very broad SP-API)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Amazon developer registration and role approval friction.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer-docs.amazon.com/sp-api/docs/registering-your-application" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.9500000000000001</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">50</td>
+        <td data-label="App"><strong>fanbasis</strong><div class="muted tiny">Ecommerce</div></td>
+        <td class="one-liner" data-label="What it does">Creator payments / checkout infrastructure.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://apidocs.fan/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">51</td>
+        <td data-label="App"><strong>DataForSEO</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">SEO &amp; SERP data API marketplace.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (very broad SEO endpoints)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.dataforseo.com/v3/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">52</td>
+        <td data-label="App"><strong>SE Ranking</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">SEO platform with rank tracking and site audit APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-warn">paid</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Paid plan required for meaningful API use.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://seranking.com/api.html" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.89</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">53</td>
+        <td data-label="App"><strong>Ahrefs</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">SEO data platform with API v3 and hosted MCP.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-warn">paid</span></td>
+        <td data-label="API / MCP">REST + official MCP<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Paid plan (Lite+) required for real API/MCP usage.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.ahrefs.com/en/api/docs/introduction" target="_blank" rel="noopener">docs</a> · <a href="https://docs.ahrefs.com/en/mcp/docs/introduction" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">54</td>
+        <td data-label="App"><strong>MrScraper</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">Web scraping / automation API service.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.mrscraper.com/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.83</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">55</td>
+        <td data-label="App"><strong>Apify</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">Actor-based web scraping and automation platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad) + Actors<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.apify.com/api/v2" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.92</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">56</td>
+        <td data-label="App"><strong>Firecrawl</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">LLM-oriented web crawling and extraction API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + MCP<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.firecrawl.dev/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">57</td>
+        <td data-label="App"><strong>Bright Data</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">Proxy, scraping, and SERP datasets platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST / proxy APIs (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.brightdata.com/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">58</td>
+        <td data-label="App"><strong>Sherlock</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">Open-source username hunt across social sites (CLI, not SaaS API).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">CLI / Python (not a hosted REST API)<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Not a networked SaaS API — toolkit would wrap CLI/local process.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://github.com/sherlock-project/sherlock" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">59</td>
+        <td data-label="App"><strong>Waterfall.io</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">Contact/company enrichment and prospecting API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (enrichment/prospector)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-bad">blocked</span><div class="muted tiny">Contract-gated API keys — outreach required.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.waterfall.io/v1/authentication" target="_blank" rel="noopener">docs</a> · <a href="https://docs.waterfall.io/v1/introduction" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">60</td>
+        <td data-label="App"><strong>Clay</strong><div class="muted tiny">Data, SEO and Scraping</div></td>
+        <td class="one-liner" data-label="What it does">GTM data enrichment workbook platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">HTTP API / webhooks (narrow vs UI)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Product is UI-first; public agent toolkit surface is thinner and account-gated.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.clay.com/university/guide/http-api-integration-overview" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.7</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">61</td>
+        <td data-label="App"><strong>GitHub</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Source control and DevOps platform with excellent REST/GraphQL APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + GraphQL (very broad)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">62</td>
+        <td data-label="App"><strong>Vercel</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Frontend cloud deployment platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://vercel.com/docs/rest-api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.98</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">63</td>
+        <td data-label="App"><strong>Netlify</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">JAMstack hosting and deploy platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.netlify.com/api/get-started/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">64</td>
+        <td data-label="App"><strong>Cloudflare</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">CDN, DNS, security, and edge compute APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.cloudflare.com/fundamentals/api/get-started/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.94</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">65</td>
+        <td data-label="App"><strong>Supabase</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Postgres backend-as-a-service with Auth, Storage, Realtime.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + JS client (broad)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://supabase.com/docs/reference/api/introduction" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">66</td>
+        <td data-label="App"><strong>Neo4j</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Graph database with HTTP/Bolt drivers and Aura cloud.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">HTTP API + Bolt/Cypher<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://neo4j.com/docs/http-api/current/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">67</td>
+        <td data-label="App"><strong>Snowflake</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Cloud data warehouse with SQL API and connectors.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Other</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">SQL API + drivers (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.snowflake.com/en/developer-guide/sql-api/index" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.9800000000000001</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">68</td>
+        <td data-label="App"><strong>MongoDB Atlas</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Managed MongoDB with Atlas Admin API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST Admin API + driver APIs<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://www.mongodb.com/docs/atlas/configure-api-access/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">69</td>
+        <td data-label="App"><strong>Datadog</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Observability platform (metrics, logs, APM) with full HTTP API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.datadoghq.com/api/latest/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.92</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">70</td>
+        <td data-label="App"><strong>Sentry</strong><div class="muted tiny">Developer, Infra and Data platforms</div></td>
+        <td class="one-liner" data-label="What it does">Error monitoring and performance platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.sentry.io/api/auth/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">71</td>
+        <td data-label="App"><strong>Notion</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">All-in-one workspace with pages, DBs, and public API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.notion.com/docs/authorization" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">72</td>
+        <td data-label="App"><strong>Airtable</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Spreadsheet-database hybrid with REST/metadata APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://airtable.com/developers/web/api/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">73</td>
+        <td data-label="App"><strong>Linear</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Issue tracking for software teams with GraphQL API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">GraphQL (broad product surface)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.linear.app/docs/graphql/working-with-the-graphql-api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">74</td>
+        <td data-label="App"><strong>Jira</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Atlassian issue tracker with Cloud REST APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Basic</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (very broad)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">75</td>
+        <td data-label="App"><strong>Asana</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Work management / tasks platform.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.asana.com/docs/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">76</td>
+        <td data-label="App"><strong>Monday.com</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Work OS boards with GraphQL API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">GraphQL (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.monday.com/api-reference/docs/authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.98</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">77</td>
+        <td data-label="App"><strong>ClickUp</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Productivity suite with tasks, docs, and chat APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://clickup.com/api/developer-portal/authentication/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.96</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">78</td>
+        <td data-label="App"><strong>Coda</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Doc-as-app platform with REST API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://coda.io/developers/apis/v1" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">79</td>
+        <td data-label="App"><strong>Smartsheet</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Work management sheets with enterprise API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://smartsheet.redoc.ly/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">80</td>
+        <td data-label="App"><strong>Harvest</strong><div class="muted tiny">Productivity and Project Management</div></td>
+        <td class="one-liner" data-label="What it does">Time tracking and invoicing API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (moderate)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://help.getharvest.com/api-v2/authentication-api/authentication/authentication/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">81</td>
+        <td data-label="App"><strong>Stripe</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Payments infrastructure with best-in-class API docs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (very broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.stripe.com/keys" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">82</td>
+        <td data-label="App"><strong>Plaid</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Bank account linking and financial data API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad fintech)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Production access is application-gated (sandbox is easy).</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://plaid.com/docs/api/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">83</td>
+        <td data-label="App"><strong>Binance</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Crypto exchange public &amp; signed trading APIs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST + WebSocket (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://binance-docs.github.io/apidocs/spot/en/#api-key-restrictions" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">84</td>
+        <td data-label="App"><strong>Paygent Connect</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Paygent Connect — payment gateway stack powered by NMI.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Other</span> <span class="badge badge-neutral">Basic</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">NMI/Collect.js style gateway APIs<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-bad">blocked</span><div class="muted tiny">Merchant underwriting / partner onboarding required; thin public Paygent-specific docs.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://secure.nmi.com/merchants/resources/integration/integration_portal.php" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.75</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">85</td>
+        <td data-label="App"><strong>iPayX</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">iPayX AI payments / docs surface (emerging).</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-bad">unclear</span></td>
+        <td data-label="API / MCP">Documented API (verify live)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Sparse public evidence; needs human confirmation of credential path.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://ipayx.ai/docs" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.63</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">86</td>
+        <td data-label="App"><strong>QuickBooks</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Intuit QuickBooks Online accounting API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad accounting)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.intuit.com/app/developer/qbo/docs/get-started" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">87</td>
+        <td data-label="App"><strong>Xero</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Xero cloud accounting API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.xero.com/documentation/guides/oauth2/overview/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.97</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">88</td>
+        <td data-label="App"><strong>Brex</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Brex corporate card and spend platform API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-warn">admin</span></td>
+        <td data-label="API / MCP">REST (moderate–broad)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Needs Brex customer account (or partner approval) — no free public sandbox for outsiders.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developer.brex.com/" target="_blank" rel="noopener">docs</a> · <a href="https://developer.brex.com/guides/partner_authentication" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">89</td>
+        <td data-label="App"><strong>Ramp</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Ramp spend management Developer API + Developer MCP.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-warn">admin</span></td>
+        <td data-label="API / MCP">REST + Developer MCP<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Requires Ramp business admin; sandbox provisioning may need account manager.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.ramp.com/developer-api/v1/overview/introduction" target="_blank" rel="noopener">docs</a> · <a href="https://support.ramp.com/accessing-the-developer-api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.94</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">90</td>
+        <td data-label="App"><strong>PitchBook</strong><div class="muted tiny">Finance and Fintech</div></td>
+        <td class="one-liner" data-label="What it does">Private market / company research data API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">REST (research data)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-bad">blocked</span><div class="muted tiny">Sales/contract gate for API — correct finding, not a research failure.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://pitchbook.com/help/PitchBook-api" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.9</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">91</td>
+        <td data-label="App"><strong>NotebookLM</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">NotebookLM / Gemini Enterprise notebook research surfaces.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">Gemini Enterprise / Vertex-adjacent (not classic NotebookLM consumer API)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-bad">blocked</span><div class="muted tiny">No clear self-serve public NotebookLM API equivalent to other toolkits.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://cloud.google.com/gemini/enterprise/docs" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.8</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">92</td>
+        <td data-label="App"><strong>Otter AI</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">Meeting transcription product with hosted MCP server.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">Official MCP (primary); limited public REST<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">MCP-first; classic REST toolkit may need partner/support path.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">93</td>
+        <td data-label="App"><strong>Fathom</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">AI meeting recorder with public API keys.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST; community MCP wrappers<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://developers.fathom.ai/" target="_blank" rel="noopener">docs</a> · <a href="https://github.com/jerichosequitin/fathom-ai-mcp" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.95</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">94</td>
+        <td data-label="App"><strong>Consensus</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">AI search engine for scientific papers.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">API (research search) — confirm current status<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Access appears request-gated; verify current developer onboarding.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://consensus.app/home/blog/consensus-api/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.62</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">95</td>
+        <td data-label="App"><strong>Reducto</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">Document parsing / OCR-for-LLMs API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (document parse)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.reducto.ai/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.93</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">96</td>
+        <td data-label="App"><strong>Devin</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">Cognition Devin software engineering agent with API/MCP docs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span> <span class="badge badge-neutral">OAuth2</span></td>
+        <td data-label="Access"><span class="badge badge-bad">partner</span></td>
+        <td data-label="API / MCP">API + MCP (agent sessions)<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Product access / seat gate before toolkit can be exercised.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.devin.ai/" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.83</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">97</td>
+        <td data-label="App"><strong>higgsfield</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">AI content / video generation suite with CLI docs.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span> <span class="badge badge-neutral">Token</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">CLI / API (content generation)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-warn">partial</span><div class="muted tiny">Docs maturity / auth details need live confirmation per plan.</div></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.higgsfield.ai/" target="_blank" rel="noopener">docs</a> · <a href="https://higgsfield.ai/cli" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.71</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">98</td>
+        <td data-label="App"><strong>Mermaid CLI</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">Local CLI to render Mermaid diagrams to images/SVG.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">Other</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">CLI (local process)<div class="muted tiny">MCP: community</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://github.com/mermaid-js/mermaid-cli" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.99</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">99</td>
+        <td data-label="App"><strong>YouTube Transcript</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">Third-party YouTube transcript fetching API.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">self serve</span></td>
+        <td data-label="API / MCP">REST (narrow — transcripts)<div class="muted tiny">MCP: none_found</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://transcriptapi.com/docs" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.91</div></td>
+      </tr>
+<tr>
+        <td class="num" data-label="#">100</td>
+        <td data-label="App"><strong>Grain</strong><div class="muted tiny">AI, Research and Media-native</div></td>
+        <td class="one-liner" data-label="What it does">AI meeting notes for sales teams with official MCP.</td>
+        <td data-label="Auth"><span class="badge badge-neutral">OAuth2</span> <span class="badge badge-neutral">API key</span></td>
+        <td data-label="Access"><span class="badge badge-good">trial or paid self serve</span></td>
+        <td data-label="API / MCP">REST + official MCP<div class="muted tiny">MCP: official</div></td>
+        <td data-label="Build"><span class="badge badge-good">ready</span></td>
+        <td class="evidence" data-label="Evidence"><a href="https://docs.grain.com/" target="_blank" rel="noopener">docs</a> · <a href="https://api.grain.com/_/mcp" target="_blank" rel="noopener">docs</a><div class="muted tiny">conf 0.82</div></td>
+      </tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="footer">Generated 2026-07-10T21:28:56.596Z · Pass 2 · Re-run with <code>npm run build</code></p>
+</div>
+<script>
+const q = document.getElementById('q');
+const build = document.getElementById('build');
+const access = document.getElementById('access');
+const count = document.getElementById('count');
+const rows = [...document.querySelectorAll('#matrix-table tbody tr')];
+function apply() {
+  const qq = q.value.trim().toLowerCase();
+  const b = build.value;
+  const a = access.value;
+  let shown = 0;
+  for (const tr of rows) {
+    const text = tr.textContent.toLowerCase();
+    const okQ = !qq || text.includes(qq);
+    const okB = !b || text.includes(b);
+    const okA = !a || text.includes(a.replaceAll('_',' ')) || text.includes(a);
+    const show = okQ && okB && okA;
+    tr.style.display = show ? '' : 'none';
+    if (show) shown += 1;
+  }
+  count.textContent = shown + ' / ' + rows.length + ' shown';
+}
+q.addEventListener('input', apply);
+build.addEventListener('change', apply);
+access.addEventListener('change', apply);
+apply();
+</script>
+</body>
+</html>

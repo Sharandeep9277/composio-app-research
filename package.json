@@ -1,0 +1,22 @@
+{
+  "name": "composio-app-research",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "research": "node src/run-research.mjs",
+    "verify": "node src/run-verify.mjs",
+    "report": "node src/generate-report.mjs",
+    "build": "node src/run-research.mjs && node src/run-verify.mjs && node src/generate-report.mjs",
+    "start": "npx --yes serve public -p 4173"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Agent pipeline that researches 100 apps for Composio-style toolkit buildability",
+  "type": "module",
+  "dependencies": {
+    "cheerio": "^1.2.0",
+    "node-fetch": "^3.3.2"
+  }
+}

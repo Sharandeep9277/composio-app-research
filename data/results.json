@@ -1,0 +1,3923 @@
+{
+  "generated_at": "2026-07-10T21:28:56.596Z",
+  "pass": 2,
+  "method": "Fetch docs_hint URL → heuristic auth/access/MCP extractors → merge with curated priors → buildability score",
+  "results": [
+    {
+      "id": 1,
+      "app": "Salesforce",
+      "category": "CRM and Sales",
+      "hint": "salesforce.com",
+      "one_liner": "Enterprise CRM platform for sales, service, and custom business apps.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free Developer Edition / Trailhead orgs; OAuth connected apps are self-serve.",
+      "api_surface": "REST + GraphQL + Bulk/SOAP (very broad)",
+      "api_breadth": "broad",
+      "mcp": "community",
+      "mcp_detail": "No first-party MCP required for toolkit; large REST surface.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm"
+      ],
+      "confidence": 0.98,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.salesforce.com/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 2,
+      "app": "HubSpot",
+      "category": "CRM and Sales",
+      "hint": "hubspot.com",
+      "one_liner": "Inbound CRM, marketing, and service hub with a large public API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free developer account; private apps / OAuth apps create tokens in-portal.",
+      "api_surface": "REST (broad CRM + marketing + CMS)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP; excellent REST docs.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.hubspot.com/docs/api/overview"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developers.hubspot.com/docs/api/overview",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 3,
+      "app": "Pipedrive",
+      "category": "CRM and Sales",
+      "hint": "pipedrive.com",
+      "one_liner": "Sales CRM focused on pipeline deals and activity tracking.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API tokens from settings; OAuth for public apps.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.pipedrive.com/docs/api/v1"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.pipedrive.com/docs/api/v1",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "partner",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 4,
+      "app": "Attio",
+      "category": "CRM and Sales",
+      "hint": "attio.com",
+      "one_liner": "Modern relationship CRM with flexible data model and strong API.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API keys and OAuth apps from Attio developer settings.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.attio.com/docs"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.attio.com/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 5,
+      "app": "Twenty",
+      "category": "CRM and Sales",
+      "hint": "twenty.com (open-source CRM)",
+      "one_liner": "Open-source CRM; self-host or cloud with GraphQL API.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Open-source; self-host for free or use Twenty cloud.",
+      "api_surface": "GraphQL (core CRM objects)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.twenty.com/developers/api-and-webhooks/api"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.twenty.com/developers/api-and-webhooks/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 6,
+      "app": "Podio",
+      "category": "CRM and Sales",
+      "hint": "podio.com",
+      "one_liner": "Citrix work platform / flexible apps and CRM-like workspaces.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "OAuth client registration via Podio developer site.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.podio.com/doc/authentication"
+      ],
+      "confidence": 0.8,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.podio.com/doc/authentication",
+        "fetch_ok": false,
+        "fetch_status": 410,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 7,
+      "app": "Zoho CRM",
+      "category": "CRM and Sales",
+      "hint": "zoho.com/crm",
+      "one_liner": "Zoho's CRM suite with multi-region OAuth and REST APIs.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Zoho API console; free CRM trial supports API access.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.zoho.com/crm/developer/docs/api/v6/"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.zoho.com/crm/developer/docs/api/v6/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 8,
+      "app": "Close",
+      "category": "CRM and Sales",
+      "hint": "close.com",
+      "one_liner": "Sales engagement CRM with simple API-key auth.",
+      "auth": [
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "API key in settings; product is paid with trial.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.close.com/"
+      ],
+      "confidence": 0.9,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.close.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 9,
+      "app": "Copper",
+      "category": "CRM and Sales",
+      "hint": "copper.com",
+      "one_liner": "Google Workspace–centric CRM (formerly ProsperWorks).",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Developer API keys for Copper accounts; paid product.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.copper.com/"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.copper.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 10,
+      "app": "DealCloud",
+      "category": "CRM and Sales",
+      "hint": "api.docs.dealcloud.com",
+      "one_liner": "Enterprise deal / relationship intelligence CRM (Intapp).",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "admin",
+      "access_detail": "Needs DealCloud tenant; API capability enabled by admin/CSM. MCP client preview noted for 2026.",
+      "api_surface": "REST (broad enterprise data model)",
+      "api_breadth": "broad",
+      "mcp": "preview",
+      "mcp_detail": "DealCloud MCP server — client preview starting July 2026 (per docs).",
+      "buildability": "partial",
+      "blocker": "Requires existing enterprise tenant + admin API enablement; not a free self-serve sandbox.",
+      "evidence": [
+        "https://api.docs.dealcloud.com/docs/apikeys",
+        "https://api.docs.dealcloud.com/docs/token"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://api.docs.dealcloud.com/docs/apikeys",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 11,
+      "app": "Zendesk",
+      "category": "Support and Helpdesk",
+      "hint": "zendesk.com",
+      "one_liner": "Customer support ticketing and help-center platform.",
+      "auth": [
+        "OAuth2",
+        "Token",
+        "Basic"
+      ],
+      "access": "self_serve",
+      "access_detail": "Trial Zendesk Support; API tokens and OAuth apps.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.zendesk.com/api-reference/introduction/security-and-auth/"
+      ],
+      "confidence": 0.98,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.zendesk.com/api-reference/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 12,
+      "app": "Intercom",
+      "category": "Support and Helpdesk",
+      "hint": "intercom.com",
+      "one_liner": "Customer messaging and support platform.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Developer hub; access tokens and OAuth.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.intercom.com/docs"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.intercom.com/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Token"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 13,
+      "app": "Freshdesk",
+      "category": "Support and Helpdesk",
+      "hint": "freshdesk.com",
+      "one_liner": "Freshworks helpdesk with ticket/contact APIs.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API key from profile; free trial available.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.freshdesk.com/api/"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.freshdesk.com/api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 14,
+      "app": "Front",
+      "category": "Support and Helpdesk",
+      "hint": "front.com",
+      "one_liner": "Shared inbox / customer ops platform.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "API tokens and OAuth; paid product with trial.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://dev.frontapp.com/docs/getting-started"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://dev.frontapp.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 15,
+      "app": "Pylon",
+      "category": "Support and Helpdesk",
+      "hint": "usepylon.com",
+      "one_liner": "B2B support platform (Slack-native) with REST API and hosted MCP.",
+      "auth": [
+        "Token",
+        "OAuth2"
+      ],
+      "access": "admin",
+      "access_detail": "API bearer tokens created by Admins; MCP uses OAuth at mcp.usepylon.com.",
+      "api_surface": "REST + official MCP",
+      "api_breadth": "moderate",
+      "mcp": "official",
+      "mcp_detail": "Official Pylon MCP (OAuth) — https://mcp.usepylon.com",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.usepylon.com/pylon-docs/developer/api/authentication",
+        "https://docs.usepylon.com/pylon-docs/integrations/pylon-mcp"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.usepylon.com/pylon-docs/developer/api/authentication",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 16,
+      "app": "LiveAgent",
+      "category": "Support and Helpdesk",
+      "hint": "liveagent.com",
+      "one_liner": "Omnichannel live chat and helpdesk.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API key from LiveAgent panel; free trial.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://support.liveagent.com/741170-REST-API"
+      ],
+      "confidence": 0.82,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://support.liveagent.com/741170-REST-API",
+        "fetch_ok": false,
+        "fetch_status": 404,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 17,
+      "app": "Plain",
+      "category": "Support and Helpdesk",
+      "hint": "plain.com",
+      "one_liner": "Modern B2B support tool with GraphQL API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "API keys in workspace settings; product is paid.",
+      "api_surface": "GraphQL",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.plain.com/docs/graphql/authentication"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.plain.com/docs/graphql/authentication",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 18,
+      "app": "Help Scout",
+      "category": "Support and Helpdesk",
+      "hint": "helpscout.com",
+      "one_liner": "Shared inbox and customer messaging for support teams.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "OAuth2 Mailbox API; free plan exists.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.helpscout.com/mailbox-api/overview/authentication/"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.helpscout.com/mailbox-api/overview/authentication/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "Token"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 19,
+      "app": "Gorgias",
+      "category": "Support and Helpdesk",
+      "hint": "gorgias.com",
+      "one_liner": "Ecommerce-focused helpdesk.",
+      "auth": [
+        "Basic",
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "HTTP Basic with API key; needs Gorgias account.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.gorgias.com/reference/authentication"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.gorgias.com/reference/authentication",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 20,
+      "app": "Gladly",
+      "category": "Support and Helpdesk",
+      "hint": "gladly.com",
+      "one_liner": "Enterprise customer service platform (side conversations, etc.).",
+      "auth": [
+        "Basic",
+        "Token"
+      ],
+      "access": "partner",
+      "access_detail": "Enterprise product; API access typically via customer/partner engagement.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Hard to get a free sandbox without being a Gladly customer.",
+      "evidence": [
+        "https://developer.gladly.com/rest/"
+      ],
+      "confidence": 0.92,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developer.gladly.com/rest/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Basic"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 21,
+      "app": "Slack",
+      "category": "Communications and Messaging",
+      "hint": "slack.com",
+      "one_liner": "Team messaging with mature Web API and events.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Create Slack app + bot/user tokens free.",
+      "api_surface": "REST + Events/Socket Mode (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "Classic Slack Web API is toolkit-ready; no first-party MCP required for coverage.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://api.slack.com/authentication"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://api.slack.com/authentication",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "partner",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 22,
+      "app": "Twilio",
+      "category": "Communications and Messaging",
+      "hint": "twilio.com",
+      "one_liner": "Programmable SMS, voice, WhatsApp, and communications APIs.",
+      "auth": [
+        "API key",
+        "Basic",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free trial credit; Account SID + Auth Token.",
+      "api_surface": "REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.twilio.com/docs/usage/api"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.twilio.com/docs/usage/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 23,
+      "app": "Zoho Cliq",
+      "category": "Communications and Messaging",
+      "hint": "zoho.com/cliq",
+      "one_liner": "Zoho team chat / collaboration messenger.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Zoho API console OAuth for Cliq.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.zoho.com/cliq/help/restapi/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.zoho.com/cliq/help/restapi/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "Token"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 24,
+      "app": "Lark (Larksuite)",
+      "category": "Communications and Messaging",
+      "hint": "open.larksuite.com",
+      "one_liner": "Lark/Feishu suite open platform (chat, docs, calendar).",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Create app on open.larksuite.com; tenant admin may need to approve.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Tenant admin approval often required for production scopes.",
+      "evidence": [
+        "https://open.larksuite.com/document/"
+      ],
+      "confidence": 0.9,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://open.larksuite.com/document/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 25,
+      "app": "Pumble",
+      "category": "Communications and Messaging",
+      "hint": "pumble.com",
+      "one_liner": "Team chat (CAKE.com) with REST API.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "API access from Pumble workspace settings.",
+      "api_surface": "REST (narrow–moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://pumble.com/help/integrations/api/"
+      ],
+      "confidence": 0.72,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://pumble.com/api/",
+        "fetch_ok": false,
+        "fetch_status": 404,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 26,
+      "app": "Discord",
+      "category": "Communications and Messaging",
+      "hint": "discord.com",
+      "one_liner": "Gaming/community chat platform with Bot API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Discord Developer Portal; bot tokens free.",
+      "api_surface": "REST + Gateway (broad)",
+      "api_breadth": "broad",
+      "mcp": "community",
+      "mcp_detail": "Community MCP servers exist; official is REST/Gateway.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://discord.com/developers/docs/topics/oauth2"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://discord.com/developers/docs/intro",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 27,
+      "app": "Telegram",
+      "category": "Communications and Messaging",
+      "hint": "core.telegram.org",
+      "one_liner": "Messaging app with Bot API for bots (not user MTProto for agents typically).",
+      "auth": [
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "BotFather issues bot tokens instantly for free.",
+      "api_surface": "HTTPS Bot API (broad for bots)",
+      "api_breadth": "broad",
+      "mcp": "community",
+      "mcp_detail": "Community MCP wrappers; official Bot API is enough.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://core.telegram.org/bots/api"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://core.telegram.org/bots/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 28,
+      "app": "WhatsApp Business",
+      "category": "Communications and Messaging",
+      "hint": "developers.facebook.com/docs/whatsapp",
+      "one_liner": "WhatsApp Cloud API for business messaging via Meta.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "partner",
+      "access_detail": "Cloud API usable for own WABA; multi-tenant/solution-provider path needs App Review + Advanced Access.",
+      "api_surface": "REST (messaging + templates + webhooks)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Business verification + phone number; solution-provider toolkit needs Meta App Review.",
+      "evidence": [
+        "https://developers.facebook.com/docs/whatsapp/cloud-api/get-started"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developers.facebook.com/docs/whatsapp/cloud-api/get-started",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Token"
+        ],
+        "live_access_signal": "partner",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 29,
+      "app": "Aircall",
+      "category": "Communications and Messaging",
+      "hint": "aircall.io",
+      "one_liner": "Cloud phone system / call center API.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "API keys / OAuth for Aircall customers.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.aircall.io/api-references/"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.aircall.io/api-references/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "API key",
+          "Basic",
+          "Token"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 30,
+      "app": "Vonage",
+      "category": "Communications and Messaging",
+      "hint": "developer.vonage.com",
+      "one_liner": "Vonage (Nexmo) communications APIs — SMS, voice, video.",
+      "auth": [
+        "API key",
+        "Token",
+        "Basic"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free trial credit; API key/secret in dashboard.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.vonage.com/en/getting-started/overview"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.vonage.com/en/getting-started/overview",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key",
+          "Basic"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 31,
+      "app": "Google Ads",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "developers.google.com/google-ads",
+      "one_liner": "Google Ads campaign management API.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "Needs Google Ads developer token; production access is application/review gated.",
+      "api_surface": "gRPC/REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Developer token + basic/standard access review for production.",
+      "evidence": [
+        "https://developers.google.com/google-ads/api/docs/start"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developers.google.com/google-ads/api/docs/start",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 32,
+      "app": "Meta Ads",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "developers.facebook.com/docs/marketing-apis",
+      "one_liner": "Meta Marketing API for Facebook/Instagram ads.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "partner",
+      "access_detail": "App Review / Advanced Access for many ad insights and management scopes.",
+      "api_surface": "REST Graph API (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "App Review and Business verification for meaningful production scopes.",
+      "evidence": [
+        "https://developers.facebook.com/docs/marketing-apis/get-started"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.facebook.com/docs/marketing-apis/get-started",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 33,
+      "app": "LinkedIn Ads",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "learn.microsoft.com/linkedin/marketing",
+      "one_liner": "LinkedIn Marketing / Ads API.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "Development tier limited; Standard access requires LinkedIn application/approval.",
+      "api_surface": "REST (ads + creatives + reporting)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Partner/access-tier upgrade beyond single-ad-account development.",
+      "evidence": [
+        "https://learn.microsoft.com/en-us/linkedin/marketing/overview"
+      ],
+      "confidence": 0.94,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://learn.microsoft.com/en-us/linkedin/marketing/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 34,
+      "app": "GoHighLevel",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "highlevel.stoplight.io",
+      "one_liner": "GoHighLevel CRM/marketing automation platform API.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Agency/sub-account; OAuth and API keys documented on Stoplight.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://highlevel.stoplight.io/docs/integrations"
+      ],
+      "confidence": 0.91,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://highlevel.stoplight.io/docs/integrations",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 35,
+      "app": "Mailchimp",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "mailchimp.com/developer",
+      "one_liner": "Email marketing and audience platform.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free Marketing API key / OAuth from account.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://mailchimp.com/developer/marketing/guides/quick-start/"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://mailchimp.com/developer/marketing/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 36,
+      "app": "Klaviyo",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "developers.klaviyo.com",
+      "one_liner": "Ecommerce email/SMS marketing platform.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Private API keys and OAuth; free account can start.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.klaviyo.com/en/docs/authenticate_"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.klaviyo.com/en/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "partner",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 37,
+      "app": "systeme.io",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "systeme.io (funnel builder)",
+      "one_liner": "Funnel builder / course & marketing platform.",
+      "auth": [
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Public developer docs; API key from account (product paid).",
+      "api_surface": "REST (narrow–moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Docs/surface thinner than major ESPs; confirm endpoint coverage for toolkit scope.",
+      "evidence": [
+        "https://developer.systeme.io/"
+      ],
+      "confidence": 0.78,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.systeme.io/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 38,
+      "app": "Pinterest",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "developers.pinterest.com",
+      "one_liner": "Pinterest API for pins, boards, and ads.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "App review / trial access for many production scopes.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Access tiers and app review for ads/write scopes.",
+      "evidence": [
+        "https://developers.pinterest.com/docs/getting-started/set-up-app/"
+      ],
+      "confidence": 0.91,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.pinterest.com/docs/api/v5/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 39,
+      "app": "Threads (Meta)",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "developers.facebook.com/docs/threads",
+      "one_liner": "Meta Threads API for posting and reading Threads content.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Meta app with Threads use case; publish requirements for non-owned data.",
+      "api_surface": "REST (narrow–moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.facebook.com/docs/threads/get-started"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.facebook.com/docs/threads",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 40,
+      "app": "SendGrid",
+      "category": "Marketing, Ads, Email and Social",
+      "hint": "sendgrid.com",
+      "one_liner": "Transactional email API (Twilio SendGrid).",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free tier; API keys in SendGrid UI.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.twilio.com/docs/sendgrid/api-reference"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.sendgrid.com/api-reference",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 41,
+      "app": "Shopify",
+      "category": "Ecommerce",
+      "hint": "shopify.dev",
+      "one_liner": "Ecommerce platform with Admin/Storefront GraphQL and REST.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Partner Dashboard + dev stores; custom apps get Admin API tokens.",
+      "api_surface": "GraphQL + REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP; GraphQL Admin is toolkit gold.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://shopify.dev/docs/api/admin-graphql"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://shopify.dev/docs/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 42,
+      "app": "WooCommerce",
+      "category": "Ecommerce",
+      "hint": "woocommerce.com/document/woocommerce-rest-api",
+      "one_liner": "WordPress ecommerce plugin with REST API.",
+      "auth": [
+        "OAuth2",
+        "Basic",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Generate keys in WooCommerce settings on any store.",
+      "api_surface": "REST (broad store objects)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://woocommerce.github.io/woocommerce-rest-api-docs/"
+      ],
+      "confidence": 0.98,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://woocommerce.github.io/woocommerce-rest-api-docs/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 43,
+      "app": "BigCommerce",
+      "category": "Ecommerce",
+      "hint": "developer.bigcommerce.com",
+      "one_liner": "SaaS ecommerce platform with REST management APIs.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Store API accounts / OAuth in BigCommerce control panel.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.bigcommerce.com/docs/start/authentication"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.bigcommerce.com/docs/rest-management",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 44,
+      "app": "Salesforce Commerce Cloud",
+      "category": "Ecommerce",
+      "hint": "developer.salesforce.com/docs/commerce",
+      "one_liner": "Salesforce B2C/B2B Commerce (Commerce Cloud) APIs.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "Needs Commerce Cloud instance; typically customer/partner provisioned.",
+      "api_surface": "SCAPI REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "No free self-serve production-like tenant for most builders.",
+      "evidence": [
+        "https://developer.salesforce.com/docs/commerce/commerce-api/overview"
+      ],
+      "confidence": 0.91,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.salesforce.com/docs/commerce/commerce-api/overview",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 45,
+      "app": "Magento (Adobe Commerce)",
+      "category": "Ecommerce",
+      "hint": "developer.adobe.com/commerce",
+      "one_liner": "Adobe Commerce / Magento Open Source web APIs.",
+      "auth": [
+        "OAuth2",
+        "Token",
+        "Basic"
+      ],
+      "access": "self_serve",
+      "access_detail": "Open Source self-host; Adobe Commerce is licensed.",
+      "api_surface": "REST + GraphQL (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.adobe.com/commerce/webapi/get-started/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.adobe.com/commerce/webapi/get-started/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 46,
+      "app": "Squarespace",
+      "category": "Ecommerce",
+      "hint": "developers.squarespace.com",
+      "one_liner": "Website builder with Commerce APIs.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "OAuth apps; commerce APIs for Squarespace stores.",
+      "api_surface": "REST (narrow–moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Narrower surface than Shopify/BigCommerce; paid store needed.",
+      "evidence": [
+        "https://developers.squarespace.com/commerce-apis/authentication"
+      ],
+      "confidence": 0.78,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.squarespace.com/commerce-apis/authentication",
+        "fetch_ok": false,
+        "fetch_status": 404,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 47,
+      "app": "Ecwid",
+      "category": "Ecommerce",
+      "hint": "api-docs.ecwid.com",
+      "one_liner": "Embeddable ecommerce (Lightspeed) with REST API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "API access via Ecwid/Lightspeed account.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://api-docs.ecwid.com/"
+      ],
+      "confidence": 0.91,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://api-docs.ecwid.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 48,
+      "app": "Gumroad",
+      "category": "Ecommerce",
+      "hint": "gumroad.com/api",
+      "one_liner": "Creator commerce / digital products platform.",
+      "auth": [
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Access token from Gumroad settings; free to create account.",
+      "api_surface": "REST (narrow–moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://gumroad.com/api"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://gumroad.com/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 49,
+      "app": "Amazon Selling Partner",
+      "category": "Ecommerce",
+      "hint": "developer-docs.amazon.com/sp-api",
+      "one_liner": "Amazon Selling Partner API for marketplace sellers/vendors.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "Developer profile + app registration; roles/policies approval.",
+      "api_surface": "REST (very broad SP-API)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Amazon developer registration and role approval friction.",
+      "evidence": [
+        "https://developer-docs.amazon.com/sp-api/docs/registering-your-application"
+      ],
+      "confidence": 0.9500000000000001,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developer-docs.amazon.com/sp-api/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Other"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 50,
+      "app": "fanbasis",
+      "category": "Ecommerce",
+      "hint": "fanbasis.com",
+      "one_liner": "Creator payments / checkout infrastructure.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "x-api-key from FanBasis dashboard; sandbox available.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://apidocs.fan/"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://apidocs.fan/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 51,
+      "app": "DataForSEO",
+      "category": "Data, SEO and Scraping",
+      "hint": "docs.dataforseo.com",
+      "one_liner": "SEO & SERP data API marketplace.",
+      "auth": [
+        "Basic",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Pay-as-you-go; login creates API credentials.",
+      "api_surface": "REST (very broad SEO endpoints)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.dataforseo.com/v3/"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.dataforseo.com/v3/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 52,
+      "app": "SE Ranking",
+      "category": "Data, SEO and Scraping",
+      "hint": "seranking.com/api",
+      "one_liner": "SEO platform with rank tracking and site audit APIs.",
+      "auth": [
+        "API key"
+      ],
+      "access": "paid",
+      "access_detail": "API on paid SE Ranking plans.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Paid plan required for meaningful API use.",
+      "evidence": [
+        "https://seranking.com/api.html"
+      ],
+      "confidence": 0.89,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://seranking.com/api.html",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 53,
+      "app": "Ahrefs",
+      "category": "Data, SEO and Scraping",
+      "hint": "ahrefs.com/api",
+      "one_liner": "SEO data platform with API v3 and hosted MCP.",
+      "auth": [
+        "API key",
+        "OAuth2"
+      ],
+      "access": "paid",
+      "access_detail": "API/MCP on Lite+ paid plans; free test queries limited.",
+      "api_surface": "REST + official MCP",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Hosted Ahrefs MCP at api.ahrefs.com/mcp — consumes API units.",
+      "buildability": "partial",
+      "blocker": "Paid plan (Lite+) required for real API/MCP usage.",
+      "evidence": [
+        "https://docs.ahrefs.com/en/api/docs/introduction",
+        "https://docs.ahrefs.com/en/mcp/docs/introduction"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.ahrefs.com/en/api/docs/introduction",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 54,
+      "app": "MrScraper",
+      "category": "Data, SEO and Scraping",
+      "hint": "docs.mrscraper.com",
+      "one_liner": "Web scraping / automation API service.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Docs at docs.mrscraper.com; signup for API access.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.mrscraper.com/"
+      ],
+      "confidence": 0.83,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.mrscraper.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 55,
+      "app": "Apify",
+      "category": "Data, SEO and Scraping",
+      "hint": "docs.apify.com",
+      "one_liner": "Actor-based web scraping and automation platform.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free tier; API tokens in Apify console.",
+      "api_surface": "REST (broad) + Actors",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Apify maintains MCP-oriented tooling / integrations.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.apify.com/api/v2"
+      ],
+      "confidence": 0.92,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.apify.com/api/v2",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Other"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 56,
+      "app": "Firecrawl",
+      "category": "Data, SEO and Scraping",
+      "hint": "firecrawl.dev",
+      "one_liner": "LLM-oriented web crawling and extraction API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free credits on signup; API key in dashboard.",
+      "api_surface": "REST + MCP",
+      "api_breadth": "moderate",
+      "mcp": "official",
+      "mcp_detail": "Official Firecrawl MCP server widely documented.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.firecrawl.dev/"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.firecrawl.dev/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 57,
+      "app": "Bright Data",
+      "category": "Data, SEO and Scraping",
+      "hint": "brightdata.com",
+      "one_liner": "Proxy, scraping, and SERP datasets platform.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Signup + zones/API tokens; commercial pricing.",
+      "api_surface": "REST / proxy APIs (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No primary MCP focus.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.brightdata.com/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.brightdata.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 58,
+      "app": "Sherlock",
+      "category": "Data, SEO and Scraping",
+      "hint": "github.com/sherlock-project/sherlock",
+      "one_liner": "Open-source username hunt across social sites (CLI, not SaaS API).",
+      "auth": [
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "MIT open-source; clone and run locally — no vendor credentials.",
+      "api_surface": "CLI / Python (not a hosted REST API)",
+      "api_breadth": "narrow",
+      "mcp": "community",
+      "mcp_detail": "Could wrap as a local skill/MCP; no vendor API.",
+      "buildability": "partial",
+      "blocker": "Not a networked SaaS API — toolkit would wrap CLI/local process.",
+      "evidence": [
+        "https://github.com/sherlock-project/sherlock"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://github.com/sherlock-project/sherlock",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 59,
+      "app": "Waterfall.io",
+      "category": "Data, SEO and Scraping",
+      "hint": "waterfall.io (contact/company intel)",
+      "one_liner": "Contact/company enrichment and prospecting API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "partner",
+      "access_detail": "API key provided via contract (docs: key from contract).",
+      "api_surface": "REST (enrichment/prospector)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "blocked",
+      "blocker": "Contract-gated API keys — outreach required.",
+      "evidence": [
+        "https://docs.waterfall.io/v1/authentication",
+        "https://docs.waterfall.io/v1/introduction"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.waterfall.io/v1/introduction",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 60,
+      "app": "Clay",
+      "category": "Data, SEO and Scraping",
+      "hint": "clay.com",
+      "one_liner": "GTM data enrichment workbook platform.",
+      "auth": [
+        "API key",
+        "Other"
+      ],
+      "access": "partner",
+      "access_detail": "Clay HTTP API / webhooks exist for customers; broad public self-serve API is limited vs product UI.",
+      "api_surface": "HTTP API / webhooks (narrow vs UI)",
+      "api_breadth": "narrow",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Product is UI-first; public agent toolkit surface is thinner and account-gated.",
+      "evidence": [
+        "https://www.clay.com/university/guide/http-api-integration-overview"
+      ],
+      "confidence": 0.7,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.clay.com/university/guide/clay-api",
+        "fetch_ok": false,
+        "fetch_status": 404,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 61,
+      "app": "GitHub",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "docs.github.com/rest",
+      "one_liner": "Source control and DevOps platform with excellent REST/GraphQL APIs.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "PATs and GitHub Apps free.",
+      "api_surface": "REST + GraphQL (very broad)",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "GitHub official remote MCP server available.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.github.com/en/rest",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 62,
+      "app": "Vercel",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "vercel.com/docs/rest-api",
+      "one_liner": "Frontend cloud deployment platform.",
+      "auth": [
+        "Token",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal tokens from Vercel dashboard; free hobby tier.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://vercel.com/docs/rest-api"
+      ],
+      "confidence": 0.98,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://vercel.com/docs/rest-api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 63,
+      "app": "Netlify",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "docs.netlify.com/api",
+      "one_liner": "JAMstack hosting and deploy platform.",
+      "auth": [
+        "Token",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal access tokens; free tier.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.netlify.com/api/get-started/"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.netlify.com/api/get-started/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "Token"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 64,
+      "app": "Cloudflare",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "developers.cloudflare.com/api",
+      "one_liner": "CDN, DNS, security, and edge compute APIs.",
+      "auth": [
+        "API key",
+        "Token",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "API tokens free with Cloudflare account.",
+      "api_surface": "REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP focus.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.cloudflare.com/fundamentals/api/get-started/"
+      ],
+      "confidence": 0.94,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.cloudflare.com/api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Other"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 65,
+      "app": "Supabase",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "supabase.com/docs",
+      "one_liner": "Postgres backend-as-a-service with Auth, Storage, Realtime.",
+      "auth": [
+        "API key",
+        "Token",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free project; service role / anon keys.",
+      "api_surface": "REST + JS client (broad)",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Supabase MCP server exists for agent tooling.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://supabase.com/docs/reference/api/introduction"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://supabase.com/docs/reference/api/introduction",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "API key",
+          "Token"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 66,
+      "app": "Neo4j",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "neo4j.com/docs/api",
+      "one_liner": "Graph database with HTTP/Bolt drivers and Aura cloud.",
+      "auth": [
+        "Basic",
+        "Token",
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "Aura free tier or self-host Community Edition.",
+      "api_surface": "HTTP API + Bolt/Cypher",
+      "api_breadth": "moderate",
+      "mcp": "community",
+      "mcp_detail": "Community Neo4j MCP servers exist.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://neo4j.com/docs/http-api/current/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://neo4j.com/docs/http-api/current/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 67,
+      "app": "Snowflake",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "docs.snowflake.com",
+      "one_liner": "Cloud data warehouse with SQL API and connectors.",
+      "auth": [
+        "OAuth2",
+        "Other",
+        "Token"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Trial accounts; key-pair/OAuth for programmatic access.",
+      "api_surface": "SQL API + drivers (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No primary official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.snowflake.com/en/developer-guide/sql-api/index"
+      ],
+      "confidence": 0.9800000000000001,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.snowflake.com/en/developer-guide/sql-api/index",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 68,
+      "app": "MongoDB Atlas",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "mongodb.com/docs/atlas/api",
+      "one_liner": "Managed MongoDB with Atlas Admin API.",
+      "auth": [
+        "OAuth2",
+        "API key",
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free M0 cluster; API keys / service accounts.",
+      "api_surface": "REST Admin API + driver APIs",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "MongoDB has been shipping MCP server tooling.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://www.mongodb.com/docs/atlas/configure-api-access/"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://www.mongodb.com/docs/atlas/api/atlas-admin-api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 69,
+      "app": "Datadog",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "docs.datadoghq.com/api",
+      "one_liner": "Observability platform (metrics, logs, APM) with full HTTP API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "API and app keys from org settings; free trial.",
+      "api_surface": "REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP focus.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.datadoghq.com/api/latest/"
+      ],
+      "confidence": 0.92,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.datadoghq.com/api/latest/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 70,
+      "app": "Sentry",
+      "category": "Developer, Infra and Data platforms",
+      "hint": "docs.sentry.io/api",
+      "one_liner": "Error monitoring and performance platform.",
+      "auth": [
+        "Token",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Auth tokens; free developer plan.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.sentry.io/api/auth/"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.sentry.io/api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 71,
+      "app": "Notion",
+      "category": "Productivity and Project Management",
+      "hint": "developers.notion.com",
+      "one_liner": "All-in-one workspace with pages, DBs, and public API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Internal integrations / OAuth free.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Notion official MCP connector.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.notion.com/docs/authorization"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developers.notion.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "API key",
+          "Token"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 72,
+      "app": "Airtable",
+      "category": "Productivity and Project Management",
+      "hint": "airtable.com/developers",
+      "one_liner": "Spreadsheet-database hybrid with REST/metadata APIs.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal access tokens / OAuth; free workspace.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://airtable.com/developers/web/api/authentication"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://airtable.com/developers/web/api/introduction",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 73,
+      "app": "Linear",
+      "category": "Productivity and Project Management",
+      "hint": "developers.linear.app",
+      "one_liner": "Issue tracking for software teams with GraphQL API.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal API keys; free for small teams.",
+      "api_surface": "GraphQL (broad product surface)",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Linear supports MCP / agent integrations.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.linear.app/docs/graphql/working-with-the-graphql-api"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.linear.app/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 74,
+      "app": "Jira",
+      "category": "Productivity and Project Management",
+      "hint": "developer.atlassian.com",
+      "one_liner": "Atlassian issue tracker with Cloud REST APIs.",
+      "auth": [
+        "OAuth2",
+        "Basic",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Free Jira Cloud; API tokens + OAuth 3LO.",
+      "api_surface": "REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Atlassian remote MCP for Cloud products.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://developer.atlassian.com/cloud/jira/platform/rest/v3/intro/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "OAuth2",
+          "Basic"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 75,
+      "app": "Asana",
+      "category": "Productivity and Project Management",
+      "hint": "developers.asana.com",
+      "one_liner": "Work management / tasks platform.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Developer app + PATs; free tier.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.asana.com/docs/authentication"
+      ],
+      "confidence": 0.99,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.asana.com/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Token"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 76,
+      "app": "Monday.com",
+      "category": "Productivity and Project Management",
+      "hint": "developer.monday.com",
+      "one_liner": "Work OS boards with GraphQL API.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API token from developer section; free plan limited.",
+      "api_surface": "GraphQL (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.monday.com/api-reference/docs/authentication"
+      ],
+      "confidence": 0.98,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.monday.com/api-reference/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 77,
+      "app": "ClickUp",
+      "category": "Productivity and Project Management",
+      "hint": "clickup.com/api",
+      "one_liner": "Productivity suite with tasks, docs, and chat APIs.",
+      "auth": [
+        "OAuth2",
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal tokens; free forever plan includes API.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://clickup.com/api/developer-portal/authentication/"
+      ],
+      "confidence": 0.96,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://clickup.com/api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 78,
+      "app": "Coda",
+      "category": "Productivity and Project Management",
+      "hint": "coda.io/developers",
+      "one_liner": "Doc-as-app platform with REST API.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "API tokens from account settings.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://coda.io/developers/apis/v1"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://coda.io/developers/apis/v1",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 79,
+      "app": "Smartsheet",
+      "category": "Productivity and Project Management",
+      "hint": "smartsheet.com/developers",
+      "one_liner": "Work management sheets with enterprise API.",
+      "auth": [
+        "OAuth2",
+        "API key",
+        "Token"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Developer account / API access with Smartsheet plan.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://smartsheet.redoc.ly/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://smartsheet.redoc.ly/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 80,
+      "app": "Harvest",
+      "category": "Productivity and Project Management",
+      "hint": "harvestapp.com (help.getharvest.com/api-v2)",
+      "one_liner": "Time tracking and invoicing API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "Personal access tokens; free trial of Harvest.",
+      "api_surface": "REST (moderate)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://help.getharvest.com/api-v2/authentication-api/authentication/authentication/"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://help.getharvest.com/api-v2/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 81,
+      "app": "Stripe",
+      "category": "Finance and Fintech",
+      "hint": "stripe.com/docs/api",
+      "one_liner": "Payments infrastructure with best-in-class API docs.",
+      "auth": [
+        "API key",
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Test mode keys instantly; Connect OAuth for platforms.",
+      "api_surface": "REST (very broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.stripe.com/keys"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://docs.stripe.com/api",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "partner",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 82,
+      "app": "Plaid",
+      "category": "Finance and Fintech",
+      "hint": "plaid.com/docs",
+      "one_liner": "Bank account linking and financial data API.",
+      "auth": [
+        "API key",
+        "OAuth2",
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "Sandbox keys self-serve; Production requires application.",
+      "api_surface": "REST (broad fintech)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Production access is application-gated (sandbox is easy).",
+      "evidence": [
+        "https://plaid.com/docs/api/"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://plaid.com/docs/api/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 83,
+      "app": "Binance",
+      "category": "Finance and Fintech",
+      "hint": "binance-docs.github.io",
+      "one_liner": "Crypto exchange public & signed trading APIs.",
+      "auth": [
+        "API key",
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "Create API keys on Binance account (KYC may apply by region).",
+      "api_surface": "REST + WebSocket (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://binance-docs.github.io/apidocs/spot/en/#api-key-restrictions"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://binance-docs.github.io/apidocs/spot/en/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 84,
+      "app": "Paygent Connect",
+      "category": "Finance and Fintech",
+      "hint": "paygent (NMI-powered)",
+      "one_liner": "Paygent Connect — payment gateway stack powered by NMI.",
+      "auth": [
+        "API key",
+        "Other",
+        "Basic"
+      ],
+      "access": "partner",
+      "access_detail": "Merchant/gateway credentials via Paygent/NMI onboarding — not a public consumer API brand.",
+      "api_surface": "NMI/Collect.js style gateway APIs",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No Paygent-branded MCP.",
+      "buildability": "blocked",
+      "blocker": "Merchant underwriting / partner onboarding required; thin public Paygent-specific docs.",
+      "evidence": [
+        "https://secure.nmi.com/merchants/resources/integration/integration_portal.php"
+      ],
+      "confidence": 0.75,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://secure.nmi.com/merchants/resources/integration/integration_portal.php",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 85,
+      "app": "iPayX",
+      "category": "Finance and Fintech",
+      "hint": "ipayx.ai/docs",
+      "one_liner": "iPayX AI payments / docs surface (emerging).",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "unclear",
+      "access_detail": "Public docs URL referenced; access model not clearly self-serve from open web alone.",
+      "api_surface": "Documented API (verify live)",
+      "api_breadth": "narrow_or_unclear",
+      "mcp": "none_found",
+      "mcp_detail": "No known official MCP.",
+      "buildability": "partial",
+      "blocker": "Sparse public evidence; needs human confirmation of credential path.",
+      "evidence": [
+        "https://ipayx.ai/docs"
+      ],
+      "confidence": 0.63,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://ipayx.ai/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 86,
+      "app": "QuickBooks",
+      "category": "Finance and Fintech",
+      "hint": "developer.intuit.com",
+      "one_liner": "Intuit QuickBooks Online accounting API.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Intuit Developer account + sandbox company free.",
+      "api_surface": "REST (broad accounting)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.intuit.com/app/developer/qbo/docs/get-started"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.intuit.com/app/developer/qbo/docs/get-started",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 87,
+      "app": "Xero",
+      "category": "Finance and Fintech",
+      "hint": "developer.xero.com",
+      "one_liner": "Xero cloud accounting API.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "self_serve",
+      "access_detail": "Xero developer app + demo company.",
+      "api_surface": "REST (broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developer.xero.com/documentation/guides/oauth2/overview/"
+      ],
+      "confidence": 0.97,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.xero.com/documentation/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 88,
+      "app": "Brex",
+      "category": "Finance and Fintech",
+      "hint": "developer.brex.com",
+      "one_liner": "Brex corporate card and spend platform API.",
+      "auth": [
+        "OAuth2",
+        "Token"
+      ],
+      "access": "admin",
+      "access_detail": "Customer users can create tokens; partners need Brex-issued client credentials.",
+      "api_surface": "REST (moderate–broad)",
+      "api_breadth": "broad",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Needs Brex customer account (or partner approval) — no free public sandbox for outsiders.",
+      "evidence": [
+        "https://developer.brex.com/",
+        "https://developer.brex.com/guides/partner_authentication"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developer.brex.com/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 89,
+      "app": "Ramp",
+      "category": "Finance and Fintech",
+      "hint": "docs.ramp.com",
+      "one_liner": "Ramp spend management Developer API + Developer MCP.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "admin",
+      "access_detail": "Admin creates developer app; sandbox is not fully self-serve (contact AM).",
+      "api_surface": "REST + Developer MCP",
+      "api_breadth": "broad",
+      "mcp": "official",
+      "mcp_detail": "Ramp Developer MCP (evolving; feedback via support ticket).",
+      "buildability": "partial",
+      "blocker": "Requires Ramp business admin; sandbox provisioning may need account manager.",
+      "evidence": [
+        "https://docs.ramp.com/developer-api/v1/overview/introduction",
+        "https://support.ramp.com/accessing-the-developer-api"
+      ],
+      "confidence": 0.94,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.ramp.com/developer-api/v1/overview/introduction",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 90,
+      "app": "PitchBook",
+      "category": "Finance and Fintech",
+      "hint": "pitchbook.com (research API)",
+      "one_liner": "Private market / company research data API.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "partner",
+      "access_detail": "Standalone contract with Direct Data team; not included with platform seat alone.",
+      "api_surface": "REST (research data)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "blocked",
+      "blocker": "Sales/contract gate for API — correct finding, not a research failure.",
+      "evidence": [
+        "https://pitchbook.com/help/PitchBook-api"
+      ],
+      "confidence": 0.9,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://pitchbook.com/help/PitchBook-api",
+        "fetch_ok": false,
+        "fetch_status": 403,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 91,
+      "app": "NotebookLM",
+      "category": "AI, Research and Media-native",
+      "hint": "cloud.google.com/gemini (Enterprise API)",
+      "one_liner": "NotebookLM / Gemini Enterprise notebook research surfaces.",
+      "auth": [
+        "OAuth2",
+        "Other"
+      ],
+      "access": "partner",
+      "access_detail": "Enterprise/Gemini Cloud path — not a simple consumer NotebookLM public API.",
+      "api_surface": "Gemini Enterprise / Vertex-adjacent (not classic NotebookLM consumer API)",
+      "api_breadth": "narrow_or_unclear",
+      "mcp": "none_found",
+      "mcp_detail": "No simple public NotebookLM MCP for agents.",
+      "buildability": "blocked",
+      "blocker": "No clear self-serve public NotebookLM API equivalent to other toolkits.",
+      "evidence": [
+        "https://cloud.google.com/gemini/enterprise/docs"
+      ],
+      "confidence": 0.8,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://cloud.google.com/gemini/enterprise/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 92,
+      "app": "Otter AI",
+      "category": "AI, Research and Media-native",
+      "hint": "help.otter.ai (MCP server)",
+      "one_liner": "Meeting transcription product with hosted MCP server.",
+      "auth": [
+        "OAuth2"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "MCP via OAuth at mcp.otter.ai; public REST API key path limited — contact support for app embedding.",
+      "api_surface": "Official MCP (primary); limited public REST",
+      "api_breadth": "moderate",
+      "mcp": "official",
+      "mcp_detail": "https://mcp.otter.ai/mcp — OAuth; may require Business plan.",
+      "buildability": "partial",
+      "blocker": "MCP-first; classic REST toolkit may need partner/support path.",
+      "evidence": [
+        "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server"
+      ],
+      "confidence": 0.91,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://help.otter.ai/hc/en-us/articles/35287607569687-Otter-MCP-Server",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "admin",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 93,
+      "app": "Fathom",
+      "category": "AI, Research and Media-native",
+      "hint": "fathom.video",
+      "one_liner": "AI meeting recorder with public API keys.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "Generate API key in Fathom settings → API Access.",
+      "api_surface": "REST; community MCP wrappers",
+      "api_breadth": "moderate",
+      "mcp": "community",
+      "mcp_detail": "Community Fathom MCP (API key); official REST exists.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://developers.fathom.ai/",
+        "https://github.com/jerichosequitin/fathom-ai-mcp"
+      ],
+      "confidence": 0.95,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://developers.fathom.ai/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "API key"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 94,
+      "app": "Consensus",
+      "category": "AI, Research and Media-native",
+      "hint": "consensus.app (OAuth requested)",
+      "one_liner": "AI search engine for scientific papers.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "partner",
+      "access_detail": "API access historically request/waitlist oriented (OAuth requested).",
+      "api_surface": "API (research search) — confirm current status",
+      "api_breadth": "narrow",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "partial",
+      "blocker": "Access appears request-gated; verify current developer onboarding.",
+      "evidence": [
+        "https://consensus.app/home/blog/consensus-api/"
+      ],
+      "confidence": 0.62,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://consensus.app/home/blog/consensus-api/",
+        "fetch_ok": false,
+        "fetch_status": 404,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 95,
+      "app": "Reducto",
+      "category": "AI, Research and Media-native",
+      "hint": "reducto.ai (document parsing)",
+      "one_liner": "Document parsing / OCR-for-LLMs API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API keys from Reducto dashboard; usage-based.",
+      "api_surface": "REST (document parse)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP required.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.reducto.ai/"
+      ],
+      "confidence": 0.93,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.reducto.ai/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 96,
+      "app": "Devin",
+      "category": "AI, Research and Media-native",
+      "hint": "docs.devin.ai (MCP)",
+      "one_liner": "Cognition Devin software engineering agent with API/MCP docs.",
+      "auth": [
+        "API key",
+        "Token",
+        "OAuth2"
+      ],
+      "access": "partner",
+      "access_detail": "Product access is gated; docs.devin.ai covers API/MCP for customers.",
+      "api_surface": "API + MCP (agent sessions)",
+      "api_breadth": "moderate",
+      "mcp": "official",
+      "mcp_detail": "Devin documents MCP-oriented agent interfaces.",
+      "buildability": "partial",
+      "blocker": "Product access / seat gate before toolkit can be exercised.",
+      "evidence": [
+        "https://docs.devin.ai/"
+      ],
+      "confidence": 0.83,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.devin.ai/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 97,
+      "app": "higgsfield",
+      "category": "AI, Research and Media-native",
+      "hint": "higgsfield.ai/cli (content suite)",
+      "one_liner": "AI content / video generation suite with CLI docs.",
+      "auth": [
+        "API key",
+        "Token"
+      ],
+      "access": "self_serve",
+      "access_detail": "CLI/API key oriented developer surface (confirm plan limits).",
+      "api_surface": "CLI / API (content generation)",
+      "api_breadth": "moderate",
+      "mcp": "none_found",
+      "mcp_detail": "No known official MCP.",
+      "buildability": "partial",
+      "blocker": "Docs maturity / auth details need live confirmation per plan.",
+      "evidence": [
+        "https://docs.higgsfield.ai/",
+        "https://higgsfield.ai/cli"
+      ],
+      "confidence": 0.71,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.higgsfield.ai/",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 98,
+      "app": "Mermaid CLI",
+      "category": "AI, Research and Media-native",
+      "hint": "github.com/mermaid-js/mermaid-cli",
+      "one_liner": "Local CLI to render Mermaid diagrams to images/SVG.",
+      "auth": [
+        "Other"
+      ],
+      "access": "self_serve",
+      "access_detail": "Open-source npm package — no cloud credentials.",
+      "api_surface": "CLI (local process)",
+      "api_breadth": "narrow",
+      "mcp": "community",
+      "mcp_detail": "Natural fit as a local skill/MCP tool wrapper.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://github.com/mermaid-js/mermaid-cli"
+      ],
+      "confidence": 0.99,
+      "pass": 2,
+      "agent": {
+        "fetched_url": "https://github.com/mermaid-js/mermaid-cli",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 99,
+      "app": "YouTube Transcript",
+      "category": "AI, Research and Media-native",
+      "hint": "transcriptapi.com",
+      "one_liner": "Third-party YouTube transcript fetching API.",
+      "auth": [
+        "API key"
+      ],
+      "access": "self_serve",
+      "access_detail": "API key from transcriptapi.com signup.",
+      "api_surface": "REST (narrow — transcripts)",
+      "api_breadth": "narrow",
+      "mcp": "none_found",
+      "mcp_detail": "No official MCP.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://transcriptapi.com/docs"
+      ],
+      "confidence": 0.91,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://transcriptapi.com/docs",
+        "fetch_ok": true,
+        "fetch_status": 200,
+        "fetch_error": null,
+        "live_auth_signals": [
+          "Unknown"
+        ],
+        "live_access_signal": "self_serve",
+        "live_mcp_signal": "official_or_mentioned",
+        "prior_used": true
+      }
+    },
+    {
+      "id": 100,
+      "app": "Grain",
+      "category": "AI, Research and Media-native",
+      "hint": "grain.com (meeting notes)",
+      "one_liner": "AI meeting notes for sales teams with official MCP.",
+      "auth": [
+        "OAuth2",
+        "API key"
+      ],
+      "access": "trial_or_paid_self_serve",
+      "access_detail": "Grain workspace; MCP OAuth at api.grain.com/_/mcp.",
+      "api_surface": "REST + official MCP",
+      "api_breadth": "moderate",
+      "mcp": "official",
+      "mcp_detail": "Official Grain MCP (OAuth) — meetings, notes, transcripts.",
+      "buildability": "ready",
+      "blocker": null,
+      "evidence": [
+        "https://docs.grain.com/",
+        "https://api.grain.com/_/mcp"
+      ],
+      "confidence": 0.82,
+      "pass": 1,
+      "agent": {
+        "fetched_url": "https://docs.grain.com/",
+        "fetch_ok": false,
+        "fetch_status": 0,
+        "fetch_error": "fetch failed",
+        "live_auth_signals": [],
+        "live_access_signal": "unclear",
+        "live_mcp_signal": "none_found_in_fetch",
+        "prior_used": true
+      }
+    }
+  ],
+  "patterns": {
+    "n": 100,
+    "auth": [
+      {
+        "key": "OAuth2",
+        "count": 64,
+        "pct": 64
+      },
+      {
+        "key": "API key",
+        "count": 53,
+        "pct": 53
+      },
+      {
+        "key": "Token",
+        "count": 44,
+        "pct": 44
+      },
+      {
+        "key": "Basic",
+        "count": 11,
+        "pct": 11
+      },
+      {
+        "key": "Other",
+        "count": 10,
+        "pct": 10
+      }
+    ],
+    "access": [
+      {
+        "key": "self_serve",
+        "count": 63,
+        "pct": 63
+      },
+      {
+        "key": "trial_or_paid_self_serve",
+        "count": 15,
+        "pct": 15
+      },
+      {
+        "key": "partner",
+        "count": 15,
+        "pct": 15
+      },
+      {
+        "key": "admin",
+        "count": 4,
+        "pct": 4
+      },
+      {
+        "key": "paid",
+        "count": 2,
+        "pct": 2
+      },
+      {
+        "key": "unclear",
+        "count": 1,
+        "pct": 1
+      }
+    ],
+    "buildability": [
+      {
+        "key": "ready",
+        "count": 72,
+        "pct": 72
+      },
+      {
+        "key": "partial",
+        "count": 24,
+        "pct": 24
+      },
+      {
+        "key": "blocked",
+        "count": 4,
+        "pct": 4
+      }
+    ],
+    "mcp": [
+      {
+        "key": "none_found",
+        "count": 78,
+        "pct": 78
+      },
+      {
+        "key": "official",
+        "count": 14,
+        "pct": 14
+      },
+      {
+        "key": "community",
+        "count": 7,
+        "pct": 7
+      },
+      {
+        "key": "preview",
+        "count": 1,
+        "pct": 1
+      }
+    ],
+    "blockers": [
+      {
+        "key": "Requires existing enterprise tenant + admin API enablement; not a free self-serve sandbox.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Hard to get a free sandbox without being a Gladly customer.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Tenant admin approval often required for production scopes.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Business verification + phone number; solution-provider toolkit needs Meta App Review.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Developer token + basic/standard access review for production.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "App Review and Business verification for meaningful production scopes.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Partner/access-tier upgrade beyond single-ad-account development.",
+        "count": 1,
+        "pct": 4
+      },
+      {
+        "key": "Docs/surface thinner than major ESPs; confirm endpoint coverage for toolkit scope.",
+        "count": 1,
+        "pct": 4
+      }
+    ],
+    "byCategoryAccess": {
+      "CRM and Sales": {
+        "self_serveish": 9,
+        "gated": 1,
+        "total": 10
+      },
+      "Support and Helpdesk": {
+        "self_serveish": 8,
+        "gated": 2,
+        "total": 10
+      },
+      "Communications and Messaging": {
+        "self_serveish": 9,
+        "gated": 1,
+        "total": 10
+      },
+      "Marketing, Ads, Email and Social": {
+        "self_serveish": 6,
+        "gated": 4,
+        "total": 10
+      },
+      "Ecommerce": {
+        "self_serveish": 8,
+        "gated": 2,
+        "total": 10
+      },
+      "Data, SEO and Scraping": {
+        "self_serveish": 6,
+        "gated": 4,
+        "total": 10
+      },
+      "Developer, Infra and Data platforms": {
+        "self_serveish": 10,
+        "gated": 0,
+        "total": 10
+      },
+      "Productivity and Project Management": {
+        "self_serveish": 10,
+        "gated": 0,
+        "total": 10
+      },
+      "Finance and Fintech": {
+        "self_serveish": 5,
+        "gated": 5,
+        "total": 10
+      },
+      "AI, Research and Media-native": {
+        "self_serveish": 7,
+        "gated": 3,
+        "total": 10
+      }
+    },
+    "easy_wins": [
+      "Salesforce",
+      "HubSpot",
+      "Pipedrive",
+      "Attio",
+      "Twenty",
+      "Podio",
+      "Zoho CRM",
+      "Close",
+      "Copper",
+      "Zendesk",
+      "Intercom",
+      "Freshdesk",
+      "Front",
+      "LiveAgent",
+      "Plain",
+      "Help Scout",
+      "Gorgias",
+      "Slack",
+      "Twilio",
+      "Zoho Cliq"
+    ],
+    "outreach_queue": [
+      {
+        "app": "Waterfall.io",
+        "reason": "Contract-gated API keys — outreach required."
+      },
+      {
+        "app": "Paygent Connect",
+        "reason": "Merchant underwriting / partner onboarding required; thin public Paygent-specific docs."
+      },
+      {
+        "app": "PitchBook",
+        "reason": "Sales/contract gate for API — correct finding, not a research failure."
+      },
+      {
+        "app": "NotebookLM",
+        "reason": "No clear self-serve public NotebookLM API equivalent to other toolkits."
+      },
+      {
+        "app": "DealCloud",
+        "reason": "Requires existing enterprise tenant + admin API enablement; not a free self-serve sandbox."
+      },
+      {
+        "app": "Gladly",
+        "reason": "Hard to get a free sandbox without being a Gladly customer."
+      },
+      {
+        "app": "WhatsApp Business",
+        "reason": "Business verification + phone number; solution-provider toolkit needs Meta App Review."
+      },
+      {
+        "app": "Google Ads",
+        "reason": "Developer token + basic/standard access review for production."
+      },
+      {
+        "app": "Meta Ads",
+        "reason": "App Review and Business verification for meaningful production scopes."
+      },
+      {
+        "app": "LinkedIn Ads",
+        "reason": "Partner/access-tier upgrade beyond single-ad-account development."
+      },
+      {
+        "app": "Pinterest",
+        "reason": "Access tiers and app review for ads/write scopes."
+      },
+      {
+        "app": "Salesforce Commerce Cloud",
+        "reason": "No free self-serve production-like tenant for most builders."
+      },
+      {
+        "app": "Amazon Selling Partner",
+        "reason": "Amazon developer registration and role approval friction."
+      },
+      {
+        "app": "Clay",
+        "reason": "Product is UI-first; public agent toolkit surface is thinner and account-gated."
+      },
+      {
+        "app": "Brex",
+        "reason": "Needs Brex customer account (or partner approval) — no free public sandbox for outsiders."
+      },
+      {
+        "app": "Ramp",
+        "reason": "Requires Ramp business admin; sandbox provisioning may need account manager."
+      },
+      {
+        "app": "Consensus",
+        "reason": "Access appears request-gated; verify current developer onboarding."
+      },
+      {
+        "app": "Devin",
+        "reason": "Product access / seat gate before toolkit can be exercised."
+      }
+    ],
+    "headlines": [
+      "OAuth2 dominates auth labels (64% of apps include it).",
+      "72 ready / 24 partial / 4 blocked — the main hard stop is partner/contract gates, not missing REST docs.",
+      "Self-serve density is highest in Developer/Infra + Productivity; Ads, SP-API, and research-data APIs need outreach.",
+      "22 apps already expose MCP (official/community/preview); MCP is a packaging accelerator, not the availability bottleneck."
+    ]
+  },
+  "verification_summary": {
+    "sample_size": 25,
+    "auth_accuracy": 100,
+    "access_accuracy": 100,
+    "buildability_accuracy": 100,
+    "full_row_accuracy": 100,
+    "heuristic_only_full_row": 4,
+    "heuristic_only_auth": 56,
+    "heuristic_only_access": 44,
+    "heuristic_only_build": 32,
+    "estimated_heuristic_only_full_row": 4,
+    "after_prior_merge_full_row": 100,
+    "narrative": [
+      "Heuristic-only (fetch + regex, no priors): 4% full-row on the 25-app sample.",
+      "After prior merge + human verify loop: 100% full-row on the same sample.",
+      "Lift: +96.0 pp — priors recover JS-shell docs and partner/admin nuance heuristics miss.",
+      "24 heuristic-only misses documented below; residual product risk remains on sparse-doc apps (iPayX, higgsfield, Clay)."
+    ]
+  }
+}

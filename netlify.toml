@@ -1,0 +1,11 @@
+# App Research at Scale — static case study
+# Deploy public/ to any static host (GitHub Pages, Netlify, Cloudflare Pages).
+
+[build]
+  publish = "public"
+  command = "npm run report"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

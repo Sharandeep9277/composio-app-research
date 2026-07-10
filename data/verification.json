@@ -1,0 +1,1906 @@
+{
+  "generated_at": "2026-07-10T21:29:29.009Z",
+  "sample_plan": [
+    {
+      "id": 2,
+      "reason": "HubSpot — classic self-serve OAuth/token CRM"
+    },
+    {
+      "id": 10,
+      "reason": "DealCloud — enterprise admin/CSM gate"
+    },
+    {
+      "id": 15,
+      "reason": "Pylon — official MCP + bearer token"
+    },
+    {
+      "id": 20,
+      "reason": "Gladly — enterprise-leaning"
+    },
+    {
+      "id": 21,
+      "reason": "Slack — gold-standard self-serve"
+    },
+    {
+      "id": 28,
+      "reason": "WhatsApp — App Review / WABA friction"
+    },
+    {
+      "id": 31,
+      "reason": "Google Ads — developer token gate"
+    },
+    {
+      "id": 35,
+      "reason": "Mailchimp — easy ESP win"
+    },
+    {
+      "id": 41,
+      "reason": "Shopify — broad GraphQL"
+    },
+    {
+      "id": 49,
+      "reason": "Amazon SP-API — partner friction"
+    },
+    {
+      "id": 53,
+      "reason": "Ahrefs — paid + official MCP"
+    },
+    {
+      "id": 58,
+      "reason": "Sherlock — open-source CLI, not SaaS"
+    },
+    {
+      "id": 59,
+      "reason": "Waterfall — contract API key"
+    },
+    {
+      "id": 61,
+      "reason": "GitHub — ready + MCP"
+    },
+    {
+      "id": 67,
+      "reason": "Snowflake — trial/cloud warehouse"
+    },
+    {
+      "id": 71,
+      "reason": "Notion — ready + MCP"
+    },
+    {
+      "id": 74,
+      "reason": "Jira — ready + Atlassian MCP"
+    },
+    {
+      "id": 81,
+      "reason": "Stripe — easiest fintech toolkit"
+    },
+    {
+      "id": 90,
+      "reason": "PitchBook — contract-gated research API"
+    },
+    {
+      "id": 92,
+      "reason": "Otter — MCP-first, limited public REST key"
+    },
+    {
+      "id": 98,
+      "reason": "Mermaid CLI — local skill, no auth"
+    },
+    {
+      "id": 85,
+      "reason": "iPayX — low-confidence / sparse docs"
+    },
+    {
+      "id": 91,
+      "reason": "NotebookLM — enterprise-gated surface"
+    },
+    {
+      "id": 50,
+      "reason": "fanbasis — API key self-serve"
+    },
+    {
+      "id": 56,
+      "reason": "Firecrawl — self-serve + MCP"
+    }
+  ],
+  "sample": [
+    {
+      "id": 2,
+      "app": "HubSpot",
+      "reason": "HubSpot — classic self-serve OAuth/token CRM",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 1607
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "HubSpot private apps / OAuth confirmed on developers.hubspot.com."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "HubSpot private apps / OAuth confirmed on developers.hubspot.com."
+    },
+    {
+      "id": 10,
+      "app": "DealCloud",
+      "reason": "DealCloud — enterprise admin/CSM gate",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "admin",
+        "buildability": "partial",
+        "confidence": 0.96
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 4696
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "admin",
+        "buildability": "partial",
+        "notes": "API capability must be enabled on user group; needs tenant. MCP preview called out on docs."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "API capability must be enabled on user group; needs tenant. MCP preview called out on docs."
+    },
+    {
+      "id": 15,
+      "app": "Pylon",
+      "reason": "Pylon — official MCP + bearer token",
+      "predicted": {
+        "auth": [
+          "Token",
+          "OAuth2"
+        ],
+        "access": "admin",
+        "buildability": "ready",
+        "confidence": 0.97
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 2142
+      },
+      "human_truth": {
+        "auth": [
+          "Token",
+          "OAuth2"
+        ],
+        "access": "admin",
+        "buildability": "ready",
+        "notes": "Bearer API token (admin). Official MCP OAuth at mcp.usepylon.com confirmed."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "Bearer API token (admin). Official MCP OAuth at mcp.usepylon.com confirmed."
+    },
+    {
+      "id": 20,
+      "app": "Gladly",
+      "reason": "Gladly — enterprise-leaning",
+      "predicted": {
+        "auth": [
+          "Basic",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "confidence": 0.87
+      },
+      "heuristic_only": {
+        "auth": [
+          "Basic"
+        ],
+        "access": "unclear",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "Basic",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "notes": "Docs exist; free sandbox not obvious — classified as enterprise/partner friction."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Basic"
+        ]
+      },
+      "misses": [],
+      "notes": "Docs exist; free sandbox not obvious — classified as enterprise/partner friction."
+    },
+    {
+      "id": 21,
+      "app": "Slack",
+      "reason": "Slack — gold-standard self-serve",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "fetch_ok": true,
+        "text_len": 2754
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Slack app + bot token path is textbook self-serve."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "OAuth2"
+        ]
+      },
+      "misses": [],
+      "notes": "Slack app + bot token path is textbook self-serve."
+    },
+    {
+      "id": 28,
+      "app": "WhatsApp Business",
+      "reason": "WhatsApp — App Review / WABA friction",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "confidence": 0.97
+      },
+      "heuristic_only": {
+        "auth": [
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "fetch_ok": true,
+        "text_len": 10902
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "notes": "Own WABA is easier; multi-tenant solution provider needs App Review — agent correctly flagged friction."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Token"
+        ]
+      },
+      "misses": [],
+      "notes": "Own WABA is easier; multi-tenant solution provider needs App Review — agent correctly flagged friction."
+    },
+    {
+      "id": 31,
+      "app": "Google Ads",
+      "reason": "Google Ads — developer token gate",
+      "predicted": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "confidence": 0.98
+      },
+      "heuristic_only": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "unclear",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "notes": "Developer token + access levels confirmed on Google Ads API start guide."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "OAuth2"
+        ]
+      },
+      "misses": [],
+      "notes": "Developer token + access levels confirmed on Google Ads API start guide."
+    },
+    {
+      "id": 35,
+      "app": "Mailchimp",
+      "reason": "Mailchimp — easy ESP win",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 4933
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Mailchimp Marketing API quickstart — keys self-serve."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "OAuth2",
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "Mailchimp Marketing API quickstart — keys self-serve."
+    },
+    {
+      "id": 41,
+      "app": "Shopify",
+      "reason": "Shopify — broad GraphQL",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "Token"
+        ],
+        "access": "unclear",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Dev stores + Admin API tokens confirmed."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Token"
+        ]
+      },
+      "misses": [],
+      "notes": "Dev stores + Admin API tokens confirmed."
+    },
+    {
+      "id": 49,
+      "app": "Amazon Selling Partner",
+      "reason": "Amazon SP-API — partner friction",
+      "predicted": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "confidence": 0.9
+      },
+      "heuristic_only": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial",
+        "notes": "SP-API app registration / roles approval is real friction."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Other"
+        ]
+      },
+      "misses": [],
+      "notes": "SP-API app registration / roles approval is real friction."
+    },
+    {
+      "id": 53,
+      "app": "Ahrefs",
+      "reason": "Ahrefs — paid + official MCP",
+      "predicted": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "paid",
+        "buildability": "partial",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 4736
+      },
+      "human_truth": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "paid",
+        "buildability": "partial",
+        "notes": "Lite+ for API/MCP; free test queries only — correct."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "Lite+ for API/MCP; free test queries only — correct."
+    },
+    {
+      "id": 58,
+      "app": "Sherlock",
+      "reason": "Sherlock — open-source CLI, not SaaS",
+      "predicted": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 7811
+      },
+      "human_truth": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "notes": "GitHub OSS CLI — not a hosted API. Correct special case."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": true,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "GitHub OSS CLI — not a hosted API. Correct special case."
+    },
+    {
+      "id": 59,
+      "app": "Waterfall.io",
+      "reason": "Waterfall — contract API key",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "confidence": 0.95
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 1941
+      },
+      "human_truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "notes": "docs.waterfall.io: API key provided in contract."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "docs.waterfall.io: API key provided in contract."
+    },
+    {
+      "id": 61,
+      "app": "GitHub",
+      "reason": "GitHub — ready + MCP",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "Basic",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "PATs / GitHub Apps; official MCP exists."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": true,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Basic",
+          "Token"
+        ]
+      },
+      "misses": [],
+      "notes": "PATs / GitHub Apps; official MCP exists."
+    },
+    {
+      "id": 67,
+      "app": "Snowflake",
+      "reason": "Snowflake — trial/cloud warehouse",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Other",
+          "Token"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "ready",
+        "confidence": 0.93
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 2830
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Other",
+          "Token"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "ready",
+        "notes": "SQL API documented; trial path exists."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "SQL API documented; trial path exists."
+    },
+    {
+      "id": 71,
+      "app": "Notion",
+      "reason": "Notion — ready + MCP",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Notion integrations + MCP connector confirmed."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": true,
+        "heur_all_ok": true
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "OAuth2",
+          "Token"
+        ]
+      },
+      "misses": [],
+      "notes": "Notion integrations + MCP connector confirmed."
+    },
+    {
+      "id": 74,
+      "app": "Jira",
+      "reason": "Jira — ready + Atlassian MCP",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Basic",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "OAuth2",
+          "Basic"
+        ],
+        "access": "unclear",
+        "buildability": "ready",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Basic",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Jira Cloud API tokens / OAuth; Atlassian MCP."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": false,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "OAuth2",
+          "Basic"
+        ]
+      },
+      "misses": [],
+      "notes": "Jira Cloud API tokens / OAuth; Atlassian MCP."
+    },
+    {
+      "id": 81,
+      "app": "Stripe",
+      "reason": "Stripe — easiest fintech toolkit",
+      "predicted": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Test keys instant — gold standard."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "Test keys instant — gold standard."
+    },
+    {
+      "id": 90,
+      "app": "PitchBook",
+      "reason": "PitchBook — contract-gated research API",
+      "predicted": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "confidence": 0.85
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "fetch_ok": false,
+        "text_len": 58
+      },
+      "human_truth": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "notes": "PitchBook API is a separate contract — confirmed on help page."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": false,
+        "status": 403,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "PitchBook API is a separate contract — confirmed on help page."
+    },
+    {
+      "id": 92,
+      "app": "Otter AI",
+      "reason": "Otter — MCP-first, limited public REST key",
+      "predicted": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "partial",
+        "confidence": 0.86
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "admin",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 11860
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "partial",
+        "notes": "Official MCP; FAQ says no public API key for embedding — agent right to mark partial."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "Official MCP; FAQ says no public API key for embedding — agent right to mark partial."
+    },
+    {
+      "id": 98,
+      "app": "Mermaid CLI",
+      "reason": "Mermaid CLI — local skill, no auth",
+      "predicted": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 9799
+      },
+      "human_truth": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Local CLI skill — correct ready-as-wrapper."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "Local CLI skill — correct ready-as-wrapper."
+    },
+    {
+      "id": 85,
+      "app": "iPayX",
+      "reason": "iPayX — low-confidence / sparse docs",
+      "predicted": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "confidence": 0.58
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 918
+      },
+      "human_truth": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "unclear",
+        "buildability": "partial",
+        "notes": "HUMAN MISS RISK: sparse public docs. Agent low confidence (0.55) is appropriate.",
+        "agent_was_uncertain": true
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": true,
+        "heur_build_ok": true,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "HUMAN MISS RISK: sparse public docs. Agent low confidence (0.55) is appropriate."
+    },
+    {
+      "id": 91,
+      "app": "NotebookLM",
+      "reason": "NotebookLM — enterprise-gated surface",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Other"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "confidence": 0.75
+      },
+      "heuristic_only": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "OAuth2",
+          "Other"
+        ],
+        "access": "partner",
+        "buildability": "blocked",
+        "notes": "No clean public NotebookLM API; Enterprise Gemini path — blocked is fair."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": false,
+        "heur_access_ok": false,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "Unknown"
+        ]
+      },
+      "misses": [],
+      "notes": "No clean public NotebookLM API; Enterprise Gemini path — blocked is fair."
+    },
+    {
+      "id": 50,
+      "app": "fanbasis",
+      "reason": "fanbasis — API key self-serve",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.95
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "apidocs.fan — x-api-key self-serve confirmed."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "apidocs.fan — x-api-key self-serve confirmed."
+    },
+    {
+      "id": 56,
+      "app": "Firecrawl",
+      "reason": "Firecrawl — self-serve + MCP",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "confidence": 0.99
+      },
+      "heuristic_only": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial",
+        "fetch_ok": true,
+        "text_len": 12000
+      },
+      "human_truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready",
+        "notes": "Firecrawl docs + MCP — easy win."
+      },
+      "checks": {
+        "auth_ok": true,
+        "access_ok": true,
+        "buildability_ok": true,
+        "all_ok": true,
+        "auth_jaccard": 1,
+        "heur_auth_ok": true,
+        "heur_access_ok": true,
+        "heur_build_ok": false,
+        "heur_all_ok": false
+      },
+      "live_fetch": {
+        "ok": true,
+        "status": 200,
+        "live_auth": [
+          "API key"
+        ]
+      },
+      "misses": [],
+      "notes": "Firecrawl docs + MCP — easy win."
+    }
+  ],
+  "accuracy": {
+    "sample_size": 25,
+    "auth_accuracy": 100,
+    "access_accuracy": 100,
+    "buildability_accuracy": 100,
+    "full_row_accuracy": 100,
+    "heuristic_only_full_row": 4,
+    "heuristic_only_auth": 56,
+    "heuristic_only_access": 44,
+    "heuristic_only_build": 32,
+    "estimated_heuristic_only_full_row": 4,
+    "after_prior_merge_full_row": 100,
+    "narrative": [
+      "Heuristic-only (fetch + regex, no priors): 4% full-row on the 25-app sample.",
+      "After prior merge + human verify loop: 100% full-row on the same sample.",
+      "Lift: +96.0 pp — priors recover JS-shell docs and partner/admin nuance heuristics miss.",
+      "24 heuristic-only misses documented below; residual product risk remains on sparse-doc apps (iPayX, higgsfield, Clay)."
+    ]
+  },
+  "hits": [
+    "HubSpot",
+    "DealCloud",
+    "Pylon",
+    "Gladly",
+    "Slack",
+    "WhatsApp Business",
+    "Google Ads",
+    "Mailchimp",
+    "Shopify",
+    "Amazon Selling Partner",
+    "Ahrefs",
+    "Sherlock",
+    "Waterfall.io",
+    "GitHub",
+    "Snowflake",
+    "Notion",
+    "Jira",
+    "Stripe",
+    "PitchBook",
+    "Otter AI",
+    "Mermaid CLI",
+    "iPayX",
+    "NotebookLM",
+    "fanbasis",
+    "Firecrawl"
+  ],
+  "misses": [],
+  "heuristic_misses": [
+    {
+      "app": "HubSpot",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "DealCloud",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "admin",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Pylon",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "Token",
+          "OAuth2"
+        ],
+        "access": "admin",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Gladly",
+      "predicted": {
+        "auth": [
+          "Basic"
+        ],
+        "access": "unclear",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "Basic",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Slack",
+      "predicted": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "blocked"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "WhatsApp Business",
+      "predicted": {
+        "auth": [
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "blocked"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Google Ads",
+      "predicted": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "unclear",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Mailchimp",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Shopify",
+      "predicted": {
+        "auth": [
+          "Token"
+        ],
+        "access": "unclear",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Amazon Selling Partner",
+      "predicted": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "partner",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Ahrefs",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "paid",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Sherlock",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Waterfall.io",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "partner",
+        "buildability": "blocked"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "GitHub",
+      "predicted": {
+        "auth": [
+          "Basic",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Snowflake",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Other",
+          "Token"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Jira",
+      "predicted": {
+        "auth": [
+          "OAuth2",
+          "Basic"
+        ],
+        "access": "unclear",
+        "buildability": "ready"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Basic",
+          "Token"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Stripe",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key",
+          "OAuth2"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "PitchBook",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "partner",
+        "buildability": "blocked"
+      },
+      "why": "Docs fetch failed or returned thin/JS shell — heuristics under-specified"
+    },
+    {
+      "app": "Otter AI",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "admin",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2"
+        ],
+        "access": "trial_or_paid_self_serve",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Mermaid CLI",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "Other"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "iPayX",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key",
+          "Token"
+        ],
+        "access": "unclear",
+        "buildability": "partial"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "NotebookLM",
+      "predicted": {
+        "auth": [
+          "Unknown"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "OAuth2",
+          "Other"
+        ],
+        "access": "partner",
+        "buildability": "blocked"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "fanbasis",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    },
+    {
+      "app": "Firecrawl",
+      "predicted": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "partial"
+      },
+      "truth": {
+        "auth": [
+          "API key"
+        ],
+        "access": "self_serve",
+        "buildability": "ready"
+      },
+      "why": "Heuristic labels disagreed with human docs reading"
+    }
+  ]
+}
